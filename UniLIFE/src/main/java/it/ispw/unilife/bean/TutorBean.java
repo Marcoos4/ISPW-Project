@@ -1,5 +1,6 @@
 package it.ispw.unilife.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TutorBean {
@@ -8,17 +9,19 @@ public class TutorBean {
     private  String surname;
     private List<String> subjects;
     private double hourlyRate;
+    private int rating;
 
     // Costruttore vuoto
     public TutorBean(){}
 
     // Costruttore completo
-    public TutorBean(String id, String name, String surname, List<String> subjects, double hourlyRate){
+    public TutorBean(String id, String name, String surname, List<String> subjects, double hourlyRate, int rating){
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.subjects = subjects;
         this.hourlyRate = hourlyRate;
+        this.rating = rating;
     }
 
     // --- GETTERS & SETTERS ---
@@ -38,5 +41,6 @@ public class TutorBean {
     public double getHourlyRate() { return hourlyRate; }
     public void setHourlyRate(double hourlyRate) { this.hourlyRate = hourlyRate; }
 
-
+    public int getRating() {return rating;}
+    public void setRating(int rating){this.rating = rating;}
 }

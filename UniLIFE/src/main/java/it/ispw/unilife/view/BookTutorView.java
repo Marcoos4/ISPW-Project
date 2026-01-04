@@ -2,110 +2,170 @@ package it.ispw.unilife.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import it.ispw.unilife.controller.BookingCtrl;
 import it.ispw.unilife.bean.TutorBean;
+
 import java.util.List;
 
 /**
- * Graphic Controller associato alla vista FXML per la ricerca e prenotazione dei Tutor.
- * <p>
- * Questa classe agisce come Boundary nel pattern BCE, gestendo l'interazione con l'utente
- * e delegando l'esecuzione della logica di business al {@link BookingCtrl}.
- * </p>
+ * Graphic Controller per la schermata di ricerca e prenotazione Tutor.
+ * Questa classe gestisce esclusivamente la logica di presentazione (View),
+ * delegando la logica di business al Controller Applicativo (BookingCtrl).
  */
 public class BookTutorView {
 
+    // Riferimenti agli elementi definiti nel file FXML
     @FXML
     private TextField searchField;
 
     @FXML
-    private VBox tutorContainer;
+    private VBox tutorContainer; // Contenitore scrollabile dove verranno inserite le card
 
-    /**
-     * Riferimento al Controller Applicativo per la gestione del caso d'uso "Book Tutor".
-     */
+    // Riferimento al Controller Applicativo
     private BookingCtrl bookingCtrl;
 
     /**
-     * Inizializza il controller dopo che l'elemento radice è stato processato.
-     * Metodo invocato automaticamente dal loader FXML.
+     * Metodo di inizializzazione chiamato automaticamente da JavaFX dopo il caricamento dell'FXML.
+     * Qui instanziamo il controller applicativo e richiediamo i dati iniziali.
      */
     @FXML
     public void initialize() {
-        // Istanziazione del controller applicativo all'avvio della vista
+        // 1. Istanziazione del Controller Applicativo
         this.bookingCtrl = new BookingCtrl();
+
+        // 2. Recupero della lista iniziale (Startup: mostra tutti i tutor ordinati per rating)
+        // Passiamo una stringa vuota per indicare "nessun filtro di ricerca".
+        List<TutorBean> initialList = bookingCtrl.getAvailableTutors("");
+
+        // 3. Popolamento dinamico dell'interfaccia
+        updateTutorContainer(initialList);
     }
 
     /**
-     * Gestisce l'evento di richiesta ricerca tutor.
-     * Recupera la query di ricerca e invoca il controller applicativo per ottenere i risultati.
-     *
-     * @param event L'evento generato dall'interazione utente (es. click su bottone o invio).
+     * Gestore dell'evento di ricerca (click sulla lente o Invio).
+     * @param event L'evento generato dall'azione utente.
      */
     @FXML
     void onSearch(ActionEvent event) {
         String query = searchField.getText();
 
-        // Delega al controller applicativo il recupero della lista tutor
-        List<TutorBean> tutors = bookingCtrl.getAvailableTutors(query);
+        // Delega al Controller Applicativo il recupero dei dati filtrati
+        List<TutorBean> filteredTutors = bookingCtrl.getAvailableTutors(query);
 
-        // Aggiornamento della vista con i dati ricevuti
-        updateTutorContainer(tutors);
+        // Aggiorna la vista con i nuovi risultati
+        updateTutorContainer(filteredTutors);
     }
 
     /**
-     * Aggiorna il contenitore grafico VBox popolandolo con le card dei tutor trovati.
-     *
-     * @param tutors Lista di {@link TutorBean} recuperati dalla logica di business.
+     * Metodo privato per aggiornare la lista visualizzata nel VBox.
+     * Pulisce i vecchi risultati e genera le nuove "card" grafiche.
+     * @param tutors La lista di Bean da visualizzare.
      */
     private void updateTutorContainer(List<TutorBean> tutors) {
-        // Pulizia dei risultati precedenti
+        // Step 1: Pulizia del contenitore dai risultati precedenti
         tutorContainer.getChildren().clear();
 
-        if (tutors == null || tutors.isEmpty()) {
-            tutorContainer.getChildren().add(new Label("Nessun tutor trovato corrispondente ai criteri."));
+        if (tutors.isEmpty()) {
+            // Gestione caso lista vuota: Feedback all'utente
+            Label noResultsLabel = new Label("Nessun tutor trovato con questi criteri.");
+            noResultsLabel.setStyle("-fx-text-fill: gray; -fx-padding: 10;");
+            tutorContainer.getChildren().add(noResultsLabel);
             return;
         }
 
-        // Generazione dinamica degli elementi della lista
+        // Step 2: Creazione dinamica delle righe (Pattern: Programmatic UI)
         for (TutorBean tutor : tutors) {
-            HBox row = createTutorRow(tutor);
-            tutorContainer.getChildren().add(row);
+            HBox card = createTutorCard(tutor);
+            tutorContainer.getChildren().add(card);
         }
     }
 
     /**
-     * Crea un componente grafico (HBox) rappresentante una singola riga tutor.
-     *
-     * @param tutor Il bean contenente i dati del tutor.
-     * @return L'oggetto HBox configurato con le label e il pulsante di azione.
+     * Factory method per creare l'elemento grafico (Card) del singolo Tutor.
+     * Converte i dati del Bean in nodi JavaFX (Label, Button, Layout).
+     * * @param tutor Il bean contenente i dati.
+     * @return HBox configurato pronto per essere aggiunto alla scena.
      */
-    private HBox createTutorRow(TutorBean tutor) {
-        HBox row = new HBox(10); // Spaziatura orizzontale di 10px
+    private HBox createTutorCard(TutorBean tutor) {
+        // --- 1. CONFIGURAZIONE LAYOUT RIGA (HBox) ---
+        HBox row = new HBox();
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.setSpacing(20); // Spazio orizzontale tra gli elementi
+        // Stile "Card": sfondo bianco, padding interno, bordo arrotondato e ombra leggera
+        row.setStyle("-fx-background-color: white; -fx-padding: 30; " +
+                "-fx-background-radius: 10; " +
+                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);");
+
+        // --- 2. COLONNA INFORMAZIONI (VBox) ---
+        VBox infoBox = new VBox(5); // 5px spazio verticale tra nome e materie
 
         Label nameLabel = new Label(tutor.getName() + " " + tutor.getSurname());
-        Label subjectLabel = new Label(" - " + tutor.getSubjects());
-        Button bookButton = new Button("Prenota");
+        nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #333;");
 
-        // Binding dell'azione di prenotazione
-        bookButton.setOnAction(e -> handleBookingAction(tutor));
+        // Uniamo la lista delle materie in una stringa separata da virgole
+        String subjectsStr = String.join(", ", tutor.getSubjects());
+        Label subjectLabel = new Label(subjectsStr);
+        subjectLabel.setStyle("-fx-text-fill: #666; -fx-font-size: 12px;");
 
-        row.getChildren().addAll(nameLabel, subjectLabel, bookButton);
+        infoBox.getChildren().addAll(nameLabel, subjectLabel);
+
+        // --- 3. SPAZIATORE ELASTICO ---
+        // Questo elemento invisibile spinge tutto ciò che segue (stelle e bottone) a destra
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        // --- 4. VISUALIZZAZIONE RATING (Stelle) ---
+        Label starLabel = new Label(getStarsString(tutor.getRating()));
+        // Colore Oro (#FFD700) per le stelle
+        starLabel.setStyle("-fx-text-fill: #FFD700; -fx-font-size: 18px; -fx-font-weight: bold;");
+
+        // --- 5. BOTTONE DI AZIONE ---
+        Button bookBtn = new Button("Prenota");
+        // Stile del bottone: Arancione, testo bianco, cursore mano, arrotondato
+        bookBtn.setStyle("-fx-background-color: #ff9900; -fx-text-fill: white; " +
+                "-fx-background-radius: 20; -fx-cursor: hand; -fx-font-weight: bold;");
+
+        // Collega l'evento click al metodo di gestione
+        bookBtn.setOnAction(e -> handleBookingAction(tutor));
+
+        // --- 6. ASSEMBLAGGIO FINALE ---
+        row.getChildren().addAll(infoBox, spacer, starLabel, bookBtn);
+
         return row;
     }
 
     /**
-     * Gestisce l'azione di avvio prenotazione per uno specifico tutor.
-     *
-     * @param tutor Il tutor selezionato.
+     * Metodo Helper per generare la stringa grafica delle stelle.
+     * Esempio: input 3 -> output "★★★☆☆"
+     */
+    private String getStarsString(int rating) {
+        StringBuilder stars = new StringBuilder();
+        // Stelle piene
+        for (int i = 0; i < rating; i++) {
+            stars.append("★"); // Carattere Unicode Black Star
+        }
+        // Stelle vuote (fino a 5)
+        for (int i = rating; i < 5; i++) {
+            stars.append("☆"); // Carattere Unicode White Star
+        }
+        return stars.toString();
+    }
+
+    /**
+     * Gestisce l'intenzione dell'utente di prenotare uno specifico tutor.
+     * Delega l'operazione al controller applicativo.
      */
     private void handleBookingAction(TutorBean tutor) {
-        // Invocazione asincrona della logica di selezione nel controller
+        // Logica di navigazione o conferma
+        // TODO: In futuro qui si aprirà la ReservationView
         bookingCtrl.processSelection(tutor);
     }
 }

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #E0E0E0;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ispw.unilife.view.BookTutorView">
+    <children>
+        <VBox layoutY="43.0" prefHeight="119.0" prefWidth="900.0" spacing="5.0" style="-fx-background-color: #ff9933; -fx-background-radius: 0 0 20 20;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="43.0">
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="30.0" top="40.0" />
+            </padding>
+            <children>
+                <Label text="18/11 | 18:30 | 2 ore" textFill="#333333">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="detailSubjectLabel" text="Materia Selezionata">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+
+        <HBox alignment="TOP_CENTER" layoutX="30.0" layoutY="185.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="185.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <VBox prefWidth="200.0" spacing="15.0" style="-fx-border-color: #eee; -fx-border-width: 0 1 0 0; -fx-padding: 0 15 0 0;">
+                    <children>
+                        <Label text="Altri Tutor">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+
+                        <VBox fx:id="otherTutorsContainer" spacing="10.0" />
+
+                        <Region VBox.vgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: #ff9933; -fx-text-fill: white; -fx-background-radius: 5;" text="Load More">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </VBox>
+
+                <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label text="Tutor Description">
+                                    <font>
+                                        <Font name="System Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Davide Falessi è professore associato di Ingegneria Informatica... (Testo statico o dinamico)" wrapText="true" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label text="Tutor Info">
+                                    <font>
+                                        <Font name="System Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                                <TextFlow>
+                                    <children>
+                                        <Label style="-fx-font-weight: bold;" text="Modalità: " />
+                                        <Label text="online su Zoom o in presenza.&#10;" />
+                                        <Label style="-fx-font-weight: bold;" text="Tariffa Oraria: " />
+                                        <Label fx:id="detailRateLabel" text="€ -- / h" />
+                                    </children>
+                                </TextFlow>
+                            </children>
+                        </VBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="20.0">
+                            <children>
+                                <Button mnemonicParsing="false" style="-fx-background-color: #ff9933; -fx-text-fill: white; -fx-background-radius: 5;" text="Back to Tutor">
+                                    <padding>
+                                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Button>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button mnemonicParsing="false" style="-fx-background-color: #ff9933; -fx-text-fill: white; -fx-background-radius: 5;" text="Conferma &amp; Paga">
+                                    <padding>
+                                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="15.0" style="-fx-border-color: #eee; -fx-border-width: 0 0 0 1; -fx-padding: 0 0 0 15;">
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/person.png" />
+                            </image>
+                        </ImageView>
+
+                        <Label fx:id="detailNameLabel" text="Nome Tutor">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+
+                        <HBox alignment="CENTER" spacing="5.0">
+                            <children>
+                                <Label text="⭐" textFill="#ff9933">
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="detailRatingLabel" text="--/5">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: #ff9933; -fx-text-fill: white; -fx-background-radius: 5;" text="Lascia Recensione">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="8.0" top="8.0" />
+                            </padding>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="900.0" spacing="15.0" style="-fx-background-color: #1a1a1a; -fx-background-radius: 0 0 20 20;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+            <children>
+                <!-- Logo/Foto -->
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/small.jpg" />
+                    </image>
+                </ImageView>
+
+                <TextField fx:id="searchField" onAction="#onSearch" promptText="Ricerca Corsi" style="-fx-background-radius: 20; -fx-pref-width: 250;">
+                    <font>
+                        <Font size="16.0" />
+                    </font></TextField>
+                <Button mnemonicParsing="false" style="-fx-background-color: #ff9900; -fx-text-fill: white; -fx-background-radius: 20; -fx-font-weight: bold;" text="Tutor">
+                    <font>
+                        <Font size="16.0" />
+                    </font></Button>
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Attività">
+                    <font>
+                        <Font size="16.0" />
+                    </font></Button>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <!-- Icone destra -->
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 50;" text="U" />
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-settings-500.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white;">
+                    <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/chat-icon-web-application-ui-icon-shapes-icon-line-line-art-smile-emoticon-square-png-clipart-removebg-preview.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </Button>
+            </children>
+            <effect>
+                <javafx.scene.effect.DropShadow color="#00000040" offsetY="2" radius="10" />
+            </effect>
+        </HBox>
+    </children>
+</AnchorPane>

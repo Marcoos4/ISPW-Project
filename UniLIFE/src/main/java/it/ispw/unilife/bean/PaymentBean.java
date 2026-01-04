@@ -1,16 +1,16 @@
 package it.ispw.unilife.bean;
 
-public class Payment {
+public class PaymentBean {
     private String cardHolder; // Nome titolare
     private String cardNumber; // Numero carta
     private String expiryDate; // Scadenza (es. "12/26")
     private String cvv;        // Codice sicurezza
 
     // Costruttore vuoto
-    public Payment() {}
+    public PaymentBean() {}
 
     // Costruttore completo
-    public Payment(String cardHolder, String cardNumber, String expiryDate, String cvv) {
+    public PaymentBean(String cardHolder, String cardNumber, String expiryDate, String cvv) {
         this.cardHolder = cardHolder;
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;

@@ -3,7 +3,7 @@ package it.ispw.unilife.bean;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Reservation {
+public class ReservationBean {
     private String reservationId;
     private String studentName;
     private TutorBean tutor;
@@ -15,10 +15,10 @@ public class Reservation {
     private String status;
 
     // Costruttore VUOTO
-    public Reservation() {}
+    public ReservationBean() {}
 
     // Costruttore COMPLETO
-    public Reservation(String reservationId, String studentName, TutorBean tutor,
+    public ReservationBean(String reservationId, String studentName, TutorBean tutor,
                            LocalDate date, LocalTime startTime, LocalTime endTime,
                            double totalPrice, String status) {
         this.reservationId = reservationId;

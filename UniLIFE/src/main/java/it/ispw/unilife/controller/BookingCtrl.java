@@ -5,66 +5,43 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BookingCtrl {
+public class BookingCtrl { // <--- QUESTA RIGA MANCAVA!
 
-    // Metodo Simulato aggiornato per gestire List<String> subjects
     public List<TutorBean> getAvailableTutors(String query) {
         List<TutorBean> dummyList = new ArrayList<>();
 
-        // --- CREAZIONE DATI FINTI ---
+        // --- CREAZIONE DATI FINTI (MOCK) ---
 
-        TutorBean t1 = new TutorBean();
-        t1.setId("1");
-        t1.setName("Mario");
-        t1.setSurname("Rossi");
-        // Ora passiamo una lista di materie
-        t1.setSubjects(Arrays.asList("Matematica", "Analisi 1", "Geometria"));
-        t1.setHourlyRate(15.0);
+        // 1. Mario Rossi: Matematica - 3 Stelle (Media)
+        TutorBean t1 = new TutorBean("1", "Mario", "Rossi",
+                Arrays.asList("Matematica", "Analisi 1", "Geometria"), 15.0, 3);
 
-        TutorBean t2 = new TutorBean();
-        t2.setId("2");
-        t2.setName("Luigi");
-        t2.setSurname("Verdi");
-        t2.setSubjects(Arrays.asList("Fisica", "Meccanica Razionale"));
-        t2.setHourlyRate(20.0);
+        // 2. Luigi Verdi: Fisica - 5 Stelle (Top)
+        TutorBean t2 = new TutorBean("2", "Luigi", "Verdi",
+                Arrays.asList("Fisica", "Meccanica Razionale"), 20.0, 5);
 
-        TutorBean t3 = new TutorBean();
-        t3.setId("3");
-        t3.setName("Anna");
-        t3.setSurname("Bianchi");
-        t3.setSubjects(Arrays.asList("Informatica", "Java", "Basi di Dati", "Sistemi Operativi"));
-        t3.setHourlyRate(18.0);
+        // 3. Anna Bianchi: Informatica - 4 Stelle (Buono)
+        TutorBean t3 = new TutorBean("3", "Anna", "Bianchi",
+                Arrays.asList("Informatica", "Java", "Basi di Dati"), 18.0, 4);
 
-        // --- LOGICA DI FILTRO ---
+        // 4. Giulia Neri: Chimica - 2 Stelle (Basso)
+        TutorBean t4 = new TutorBean("4", "Giulia", "Neri",
+                Arrays.asList("Chimica", "Biologia"), 12.0, 2);
 
-        if (query == null || query.isEmpty()) {
-            dummyList.add(t1);
-            dummyList.add(t2);
-            dummyList.add(t3);
-        } else {
-            String search = query.toLowerCase();
+        // Aggiungiamo tutto alla lista
+        dummyList.add(t1);
+        dummyList.add(t2);
+        dummyList.add(t3);
+        dummyList.add(t4);
 
-            // Controlliamo se la query è contenuta in una delle materie della lista
-            if (hasSubject(t1, search)) dummyList.add(t1);
-            if (hasSubject(t2, search)) dummyList.add(t2);
-            if (hasSubject(t3, search)) dummyList.add(t3);
-        }
-
+        // --- LOGICA DI RITORNO ---
+        // Per ora restituiamo sempre tutto (Logica Dummy)
         return dummyList;
     }
 
-    // Helper per cercare nella lista delle materie
-    private boolean hasSubject(TutorBean tutor, String query) {
-        if (tutor.getSubjects() == null) return false;
-        for (String sub : tutor.getSubjects()) {
-            if (sub.toLowerCase().contains(query)) {
-                return true;
-            }
-        }
-        return false;
+    // Metodo per gestire la selezione (necessario perché la View lo chiama)
+    public void processSelection(TutorBean tutor) {
+        System.out.println("BookingCtrl: Richiesta prenotazione per " + tutor.getName());
     }
 
-    public void processSelection(TutorBean tutor) {
-        System.out.println("TEST: Controller ha ricevuto la richiesta per " + tutor.getName());
-    }
-}
+} // <--- NON DIMENTICARE QUESTA PARENTESI DI CHIUSURA
