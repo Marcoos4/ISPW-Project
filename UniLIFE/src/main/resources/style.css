@@ -1,0 +1,38 @@
+.accordion {
+    -fx-background-color: transparent;
+}
+
+.flat-pane > .title {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 15px;
+}
+
+.flat-pane > .title > .text {
+    -fx-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.flat-pane > .title > .arrow-button {
+    -fx-background-color: transparent;
+}
+.flat-pane > .title > .arrow-button .arrow {
+    -fx-background-color: #666666;
+    -fx-padding: 0 0 0 5;
+}
+
+.flat-pane > .content {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+.flat-pane:hover > .title {
+    -fx-background-color: #f9f9f9;
+}
+
+.flat-pane {
+    -fx-skin: "javafx.scene.control.skin.TitledPaneSkin";
+}

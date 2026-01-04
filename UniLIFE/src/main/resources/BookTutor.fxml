@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f4f4f4;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ispw.unilife.view.BookTutorGraphicController">
+    <children>
+        <VBox layoutX="17.0" layoutY="134.0" prefHeight="385.0" prefWidth="220.0" spacing="10.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="134.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="Filtri">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" />
+                    </VBox.margin>
+                </Label>
+
+                <Accordion>
+                    <panes>
+                        <TitledPane animated="false" text="Macroarea">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" />
+                            </content>
+                            <styleClass>
+                                <String fx:value="flat-pane" />
+                            </styleClass>
+                        </TitledPane>
+                        <TitledPane animated="false" text="Orari">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" />
+                            </content>
+                            <styleClass>
+                                <String fx:value="flat-pane" />
+                            </styleClass>
+                        </TitledPane>
+                    </panes>
+                </Accordion>
+            </children>
+        </VBox>
+
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="220.0" layoutY="60.0" style="-fx-background-color: transparent; -fx-background: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+            <content>
+                <VBox fx:id="tutorContainer" spacing="15.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+
+              <!-- 3. L'HEADER (Messo per ULTIMO nel codice = Sta SOPRA a tutto visivamente) -->
+        <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="900.0" spacing="15.0" style="-fx-background-color: #1a1a1a; -fx-background-radius: 0 0 20 20;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+            <children>
+                <!-- Logo/Foto -->
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/small.jpg" />
+               </image>
+            </ImageView>
+
+                      <TextField promptText="Ricerca Corsi" style="-fx-background-radius: 20; -fx-pref-width: 250;" />
+                <Button mnemonicParsing="false" style="-fx-background-color: #ff9900; -fx-text-fill: white; -fx-background-radius: 20; -fx-font-weight: bold;" text="Tutor" />
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Attività" />
+
+                      <Region HBox.hgrow="ALWAYS" />
+
+                      <!-- Icone destra -->
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 50;" text="U" />
+            <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../../Downloads/icons8-settings-ios-17-outlined/icons8-settings-500.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../../Downloads/chat-icon-web-application-ui-icon-shapes-icon-line-line-art-smile-emoticon-square-png-clipart-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            </children>
+            <effect>
+                <javafx.scene.effect.DropShadow color="#00000040" offsetY="2" radius="10" />
+            </effect>
+        </HBox>
+    </children>
+</AnchorPane>
