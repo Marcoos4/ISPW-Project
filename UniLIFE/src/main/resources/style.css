@@ -1,13 +1,14 @@
+
 .accordion {
     -fx-background-color: transparent;
 }
 
 .flat-pane > .title {
-    -fx-background-color: white;
+    -fx-background-color: white; /* Forza il bianco */
     -fx-background-radius: 0;
     -fx-border-color: #dddddd;
-    -fx-border-width: 0 0 1 0;
-    -fx-padding: 15px;
+    -fx-border-width: 0 0 1 0; /* Solo riga sotto */
+    -fx-padding: 15px;         /* Più spazio */
 }
 
 .flat-pane > .title > .text {
@@ -20,8 +21,8 @@
     -fx-background-color: transparent;
 }
 .flat-pane > .title > .arrow-button .arrow {
-    -fx-background-color: #666666;
-    -fx-padding: 0 0 0 5;
+    -fx-background-color: #666666; /* Colore grigio scuro */
+    -fx-padding: 0 0 0 5; /* Sposta leggermente */
 }
 
 .flat-pane > .content {
