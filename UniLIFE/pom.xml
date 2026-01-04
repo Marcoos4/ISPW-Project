@@ -15,4 +15,18 @@
         <sonar.organization>marcoos4</sonar.organization>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+    </dependencies>
+
 </project>

@@ -2,7 +2,7 @@ package it.ispw.unilife.bean;
 
 import java.util.List;
 
-public class Tutor {
+public class TutorBean {
     private String id;
     private String name;
     private  String surname;
@@ -10,10 +10,10 @@ public class Tutor {
     private double hourlyRate;
 
     // Costruttore vuoto
-    public Tutor(){}
+    public TutorBean(){}
 
     // Costruttore completo
-    public Tutor(String id, String name, String surname, List<String> subjects, double hourlyRate){
+    public TutorBean(String id, String name, String surname, List<String> subjects, double hourlyRate){
         this.id = id;
         this.name = name;
         this.surname = surname;

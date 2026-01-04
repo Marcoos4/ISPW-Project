@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class Reservation {
     private String reservationId;
     private String studentName;
-    private Tutor tutor;
+    private TutorBean tutor;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -18,7 +18,7 @@ public class Reservation {
     public Reservation() {}
 
     // Costruttore COMPLETO
-    public Reservation(String reservationId, String studentName, Tutor tutor,
+    public Reservation(String reservationId, String studentName, TutorBean tutor,
                            LocalDate date, LocalTime startTime, LocalTime endTime,
                            double totalPrice, String status) {
         this.reservationId = reservationId;
@@ -39,8 +39,8 @@ public class Reservation {
     public String getStudentName() { return studentName; }
     public void setStudentName(String studentName) { this.studentName = studentName; }
 
-    public Tutor getTutor() { return tutor; }
-    public void setTutor(Tutor tutor) { this.tutor = tutor; }
+    public TutorBean getTutor() { return tutor; }
+    public void setTutor(TutorBean tutor) { this.tutor = tutor; }
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }

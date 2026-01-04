@@ -14,7 +14,7 @@
 .flat-pane > .title > .text {
     -fx-fill: #333333;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
+    -fx-font-size: 20px;
 }
 
 .flat-pane > .title > .arrow-button {
