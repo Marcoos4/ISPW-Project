@@ -1,11 +1,15 @@
 package it.ispw.unilife.controller;
 
+import com.stripe.exception.StripeException;
+import com.stripe.param.PaymentIntentCreateParams;
 import it.ispw.unilife.bean.TutorBean;
+import it.ispw.unilife.boundary.StripeBoundary;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BookingCtrl { // <--- QUESTA RIGA MANCAVA!
+public class BookingCtrl {
 
     public List<TutorBean> getAvailableTutors(String query) {
         List<TutorBean> dummyList = new ArrayList<>();
@@ -44,4 +48,28 @@ public class BookingCtrl { // <--- QUESTA RIGA MANCAVA!
         System.out.println("BookingCtrl: Richiesta prenotazione per " + tutor.getName());
     }
 
-} // <--- NON DIMENTICARE QUESTA PARENTESI DI CHIUSURA
+    public boolean bookLesson(TutorBean selectedTutor, String txtCardNumber, String txtExpiry, String txtCvv) {
+        StripeBoundary stripeBoundary = new StripeBoundary();
+        long amount = (long) (selectedTutor.getHourlyRate() * 100);
+
+        PaymentIntentCreateParams params = stripeBoundary.setUpPayment(amount, "eur", "pm_card_visa");
+
+        try {
+            boolean isPaid = stripeBoundary.doPayment(params);
+
+            if (!isPaid) {
+                return false;
+            }
+
+            // TODO: IMPLEMENT DAO SAVE HERE
+            // ReservationDAO dao = new ReservationDAO();
+            // dao.save(...);
+
+            return true;
+
+        } catch (StripeException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}

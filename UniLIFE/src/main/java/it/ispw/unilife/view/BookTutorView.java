@@ -1,8 +1,13 @@
 package it.ispw.unilife.view;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,7 +17,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import it.ispw.unilife.controller.BookingCtrl;
 import it.ispw.unilife.bean.TutorBean;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -134,7 +141,9 @@ public class BookTutorView {
                 "-fx-background-radius: 20; -fx-cursor: hand; -fx-font-weight: bold;");
 
         // Collega l'evento click al metodo di gestione
-        bookBtn.setOnAction(e -> handleBookingAction(tutor));
+        bookBtn.setOnAction(e -> {
+            handleBookingAction(tutor, e);
+        });
 
         // --- 6. ASSEMBLAGGIO FINALE ---
         row.getChildren().addAll(infoBox, spacer, starLabel, bookBtn);
@@ -163,9 +172,14 @@ public class BookTutorView {
      * Gestisce l'intenzione dell'utente di prenotare uno specifico tutor.
      * Delega l'operazione al controller applicativo.
      */
-    private void handleBookingAction(TutorBean tutor) {
-        // Logica di navigazione o conferma
-        // TODO: In futuro qui si aprirà la ReservationView
-        bookingCtrl.processSelection(tutor);
+    private void handleBookingAction(TutorBean tutor, Event event) {
+        try {
+            // Una sola riga per fare tutto!
+            ReservationView.display(event, tutor);
+
+        } catch (IOException e) {
+            System.err.println("Errore nel caricamento della pagina di prenotazione");
+            e.printStackTrace();
+        }
     }
 }
