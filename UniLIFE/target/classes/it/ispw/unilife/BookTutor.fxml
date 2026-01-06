@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -17,19 +18,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f4f4f4;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ispw.unilife.view.BookTutorView">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f4f4f4;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ispw.unilife.view.BookTutorView">
     <children>
-        <VBox layoutX="17.0" layoutY="134.0" prefHeight="385.0" prefWidth="220.0" spacing="10.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="134.0">
+        <VBox layoutX="17.0" layoutY="134.0" prefHeight="400.0" prefWidth="220.0" spacing="10.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0); -fx-background-radius: 10;" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="134.0">
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
             </padding>
             <children>
-                <Label text="Filtri">
+                <Label text="Filtri Ricerca">
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="18.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" />
+                        <Insets bottom="5.0" left="5.0" />
                     </VBox.margin>
                 </Label>
 
@@ -37,15 +38,52 @@
                     <panes>
                         <TitledPane animated="false" text="Macroarea">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" />
+                                <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: transparent;">
+                                    <children>
+                                        <Label text="Seleziona Materia:" textFill="#666666">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="subjectFilter" maxWidth="1.7976931348623157E308" promptText="Tutte" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                                    </children>
+                                </VBox>
                             </content>
                             <styleClass>
                                 <String fx:value="flat-pane" />
                             </styleClass>
                         </TitledPane>
+
                         <TitledPane animated="false" text="Orari">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" />
+                                <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: transparent;">
+                                    <children>
+                                        <Label text="Fascia Oraria:" textFill="#666666">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="timeFilter" maxWidth="1.7976931348623157E308" promptText="Tutti" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                                    </children>
+                                </VBox>
+                            </content>
+                            <styleClass>
+                                <String fx:value="flat-pane" />
+                            </styleClass>
+                        </TitledPane>
+
+                        <TitledPane animated="false" text="Prezzo">
+                            <content>
+                                <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: transparent;">
+                                    <children>
+                                        <Label text="Fascia di Prezzo:" textFill="#666666">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="priceFilter" maxWidth="1.7976931348623157E308" promptText="Tutti" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                                    </children>
+                                </VBox>
                             </content>
                             <styleClass>
                                 <String fx:value="flat-pane" />
@@ -53,10 +91,13 @@
                         </TitledPane>
                     </panes>
                 </Accordion>
+
+                <Region VBox.vgrow="ALWAYS" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onResetFilters" style="-fx-background-color: #e0e0e0; -fx-text-fill: #333; -fx-cursor: hand;" text="Resetta Filtri" />
             </children>
         </VBox>
 
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="220.0" layoutY="60.0" style="-fx-background-color: transparent; -fx-background: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="250.0" layoutY="85.0" style="-fx-background-color: transparent; -fx-background: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
             <content>
                 <VBox fx:id="tutorContainer" spacing="15.0">
                     <padding>
@@ -66,60 +107,57 @@
             </content>
         </ScrollPane>
 
-              <!-- 3. L'HEADER (Messo per ULTIMO nel codice = Sta SOPRA a tutto visivamente) -->
         <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="900.0" spacing="15.0" style="-fx-background-color: #1a1a1a; -fx-background-radius: 0 0 20 20;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
                 <Insets left="20.0" right="20.0" />
             </padding>
             <children>
-                <!-- Logo/Foto -->
                 <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/small.jpg" />
-               </image>
-            </ImageView>
+                    <image>
+                        <Image url="@images/small.jpg" />
+                    </image>
+                </ImageView>
 
-                      <TextField fx:id="searchField" onAction="#onSearch" promptText="Ricerca Corsi" style="-fx-background-radius: 20; -fx-pref-width: 250;">
-               <font>
-                  <Font size="16.0" />
-               </font></TextField>
+                <TextField fx:id="searchField" onAction="#onSearch" promptText="Ricerca Corsi" style="-fx-background-radius: 20; -fx-pref-width: 250;">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextField>
                 <Button mnemonicParsing="false" style="-fx-background-color: #ff9900; -fx-text-fill: white; -fx-background-radius: 20; -fx-font-weight: bold;" text="Tutor">
-               <font>
-                  <Font size="16.0" />
-               </font></Button>
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
                 <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Attività">
-               <font>
-                  <Font size="16.0" />
-               </font></Button>
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
 
-                      <Region HBox.hgrow="ALWAYS" />
+                <Region HBox.hgrow="ALWAYS" />
 
-                      <!-- Icone destra -->
                 <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 50;" text="U" />
-            <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/icons8-settings-500.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-settings-500.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
                 <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white;">
-               <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/chat-icon-web-application-ui-icon-shapes-icon-line-line-art-smile-emoticon-square-png-clipart-removebg-preview.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Button>
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/chat-icon-web-application-ui-icon-shapes-icon-line-line-art-smile-emoticon-square-png-clipart-removebg-preview.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
             </children>
             <effect>
-                <javafx.scene.effect.DropShadow color="#00000040" offsetY="2" radius="10" />
+                <DropShadow color="#00000040" offsetY="2" radius="10" />
             </effect>
         </HBox>
     </children>

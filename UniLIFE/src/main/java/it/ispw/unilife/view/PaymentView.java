@@ -1,5 +1,7 @@
 package it.ispw.unilife.view;
 
+import it.ispw.unilife.bean.PaymentBean;
+import it.ispw.unilife.bean.ReservationBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +36,9 @@ public class PaymentView {
     private TextField txtExpiry;     // Campo scadenza
 
     @FXML
+    private TextField txtCardHolder;
+
+    @FXML
     private Label lblAmount;         // Label per mostrare l'importo dinamico da pagare
 
     /**
@@ -46,23 +51,18 @@ public class PaymentView {
      * Il Tutor che l'utente ha selezionato nella schermata precedente.
      * Contiene le informazioni necessarie (prezzo, nome) per procedere.
      */
-    private TutorBean selectedTutor;
+    private ReservationBean reservationBean;
 
     /**
      * Metodo di inizializzazione per passare i dati tra le scene.
      * Viene chiamato dal Controller della schermata precedente (BookTutorView).
      *
-     * @param tutor Il bean contenente i dati del tutor selezionato.
+     * @param reservation Il bean contenente i dati della prenotazione.
      */
-    public void initData(TutorBean tutor) {
-        // 1. Salva il tutor ricevuto nello stato interno della classe
-        this.selectedTutor = tutor;
+    public void initData(ReservationBean reservation) {
+        this.reservationBean = reservation;
 
-        // 2. Inizializza il Controller Applicativo (Lazy initialization)
         this.bookingCtrl = new BookingCtrl();
-
-        // 3. Aggiorna l'interfaccia grafica
-        // Esempio: Setta il testo della lblAmount con il prezzo orario del tutor
     }
 
     /**
@@ -77,10 +77,8 @@ public class PaymentView {
         }
 
         boolean success = bookingCtrl.bookLesson(
-                this.selectedTutor,
-                txtCardNumber.getText(),
-                txtExpiry.getText(),
-                txtCvv.getText()
+                this.reservationBean,
+                new PaymentBean(txtCardHolder.getText(), txtCardNumber.getText(), txtExpiry.getText(), txtCvv.getText())
         );
 
         if (success) {
@@ -114,6 +112,10 @@ public class PaymentView {
         }
         if (!txtCvv.getText().matches("\\d{3}")) {
             showError("Errore Dati", "Il CVV deve essere di 3 cifre.");
+            return false;
+        }
+        if(txtCardHolder.getText().isEmpty()){
+            showError("Errore Dati", "Il nome non può essere vuoto");
             return false;
         }
         return true; // Tutto ok, lasciamo passare

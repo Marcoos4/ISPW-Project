@@ -5,6 +5,7 @@ public class PaymentBean {
     private String cardNumber; // Numero carta
     private String expiryDate; // Scadenza (es. "12/26")
     private String cvv;        // Codice sicurezza
+    private String code;
 
     // Costruttore vuoto
     public PaymentBean() {}
@@ -30,4 +31,7 @@ public class PaymentBean {
 
     public String getCvv() { return cvv; }
     public void setCvv(String cvv) { this.cvv = cvv; }
+
+    public String getCode() {return code;}
+    public void setCode(String code) {this.code = code;}
 }

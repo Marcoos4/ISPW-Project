@@ -2,74 +2,118 @@ package it.ispw.unilife.controller;
 
 import com.stripe.exception.StripeException;
 import com.stripe.param.PaymentIntentCreateParams;
+import it.ispw.unilife.bean.PaymentBean;
+import it.ispw.unilife.bean.ReservationBean;
 import it.ispw.unilife.bean.TutorBean;
 import it.ispw.unilife.boundary.StripeBoundary;
+import it.ispw.unilife.dao.DAOFactory;
+import it.ispw.unilife.dao.ReservationDAO;
+import it.ispw.unilife.model.Reservation;
+import it.ispw.unilife.model.ReservationStatus;
+import it.ispw.unilife.model.Tutor;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BookingCtrl {
 
-    public List<TutorBean> getAvailableTutors(String query) {
-        List<TutorBean> dummyList = new ArrayList<>();
-
-        // --- CREAZIONE DATI FINTI (MOCK) ---
-
-        // 1. Mario Rossi: Matematica - 3 Stelle (Media)
-        TutorBean t1 = new TutorBean("1", "Mario", "Rossi",
-                Arrays.asList("Matematica", "Analisi 1", "Geometria"), 15.0, 3);
-
-        // 2. Luigi Verdi: Fisica - 5 Stelle (Top)
-        TutorBean t2 = new TutorBean("2", "Luigi", "Verdi",
-                Arrays.asList("Fisica", "Meccanica Razionale"), 20.0, 5);
-
-        // 3. Anna Bianchi: Informatica - 4 Stelle (Buono)
-        TutorBean t3 = new TutorBean("3", "Anna", "Bianchi",
-                Arrays.asList("Informatica", "Java", "Basi di Dati"), 18.0, 4);
-
-        // 4. Giulia Neri: Chimica - 2 Stelle (Basso)
-        TutorBean t4 = new TutorBean("4", "Giulia", "Neri",
-                Arrays.asList("Chimica", "Biologia"), 12.0, 2);
-
-        // Aggiungiamo tutto alla lista
-        dummyList.add(t1);
-        dummyList.add(t2);
-        dummyList.add(t3);
-        dummyList.add(t4);
-
-        // --- LOGICA DI RITORNO ---
-        // Per ora restituiamo sempre tutto (Logica Dummy)
-        return dummyList;
+    public static ReservationBean selectTutor(TutorBean tutorBean) {
+        Tutor tutor = new Tutor(tutorBean.getName(), tutorBean.getSurname(), tutorBean.getSubjects(), tutorBean.getHourlyRate(), tutorBean.getRating());
+        ReservationBean reservationBean = new  ReservationBean();
+        reservationBean.setTutor(tutor);
+        return reservationBean;
     }
 
-    // Metodo per gestire la selezione (necessario perché la View lo chiama)
-    public void processSelection(TutorBean tutor) {
-        System.out.println("BookingCtrl: Richiesta prenotazione per " + tutor.getName());
+    /**
+     * Rende persistente la prenotazione utilizzando il DAO configurato (File System o DB).
+     * Questo metodo viene invocato internamente solo dopo la conferma del pagamento.
+     *
+     * @param reservation Il model contenente i dati della prenotazione da salvare.
+     */
+    private void saveReservation(Reservation reservation) {
+        ReservationDAO reservationDAO = DAOFactory.getDAOFactory().getReservationDAO("fs");
+        reservationDAO.insert(reservation);
     }
 
-    public boolean bookLesson(TutorBean selectedTutor, String txtCardNumber, String txtExpiry, String txtCvv) {
+    private long calculateDuration(LocalTime start, LocalTime end){
+        return Duration.between(start, end).toHours();
+    }
+
+    /**
+     * Gestisce l'intero flusso di prenotazione: calcolo del costo, esecuzione del pagamento tramite Stripe
+     * e salvataggio della prenotazione in caso di successo.
+     *
+     * @param reservationBean I dati della lezione (Tutor, Data, Orari).
+     * @param paymentBean I dati del metodo di pagamento utilizzato.
+     * @return true se il pagamento va a buon fine e la prenotazione viene salvata, false altrimenti.
+     */
+    public boolean bookLesson(ReservationBean reservationBean, PaymentBean paymentBean) {
         StripeBoundary stripeBoundary = new StripeBoundary();
-        long amount = (long) (selectedTutor.getHourlyRate() * 100);
+        Reservation reservationModel = new Reservation(reservationBean.getTutor(), reservationBean.getStudentName(), reservationBean.getDate(),calculateDuration(reservationBean.getStartTime(), reservationBean.getEndTime()));
+        long amountInCents = reservationModel.calculateTotalCostInCents();
 
-        PaymentIntentCreateParams params = stripeBoundary.setUpPayment(amount, "eur", "pm_card_visa");
+        if (amountInCents <= 0) {
+            System.err.println("Errore: Impossibile procedere con importo nullo o negativo.");
+            return false;
+        }
+
+        PaymentIntentCreateParams params = stripeBoundary.setUpPayment(amountInCents, "eur", "pm_card_visa");
 
         try {
             boolean isPaid = stripeBoundary.doPayment(params);
+            String payment_id = "something";
+            //TODO implementare qui il prima possibile
 
-            if (!isPaid) {
+            if (isPaid) {
+                reservationModel.updatePayment(ReservationStatus.CONFIRMED, payment_id);
+                saveReservation(reservationModel);
+                return true;
+            } else {
+                reservationModel.updatePayment(ReservationStatus.CONFIRMED, payment_id);
+                saveReservation(reservationModel);
                 return false;
             }
-
-            // TODO: IMPLEMENT DAO SAVE HERE
-            // ReservationDAO dao = new ReservationDAO();
-            // dao.save(...);
-
-            return true;
 
         } catch (StripeException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * Recupera la lista dei tutor disponibili nel sistema.
+     * Attualmente restituisce una lista statica (Mock) per fini di test/sviluppo.
+     *
+     * @param query Stringa di ricerca opzionale per filtrare i risultati.
+     * @return Una lista di TutorBean disponibili.
+     */
+    public List<TutorBean> getAvailableTutors(String query) {
+        List<TutorBean> dummyList = new ArrayList<>();
+
+        dummyList.add(new TutorBean("Mario", "Rossi",
+                Arrays.asList("Matematica", "Analisi 1", "Geometria"), 15.0, 3));
+
+        dummyList.add(new TutorBean("Luigi", "Verdi",
+                Arrays.asList("Fisica", "Meccanica Razionale"), 20.0, 5));
+
+        dummyList.add(new TutorBean("Anna", "Bianchi",
+                Arrays.asList("Informatica", "Java", "Basi di Dati"), 18.0, 4));
+
+        dummyList.add(new TutorBean("Giulia", "Neri",
+                Arrays.asList("Chimica", "Biologia"), 12.0, 2));
+
+        return dummyList;
+    }
+
+    /**
+     * Gestisce la logica di selezione di un tutor (es. logging o preparazione dati).
+     *
+     * @param tutor Il tutor selezionato dall'utente.
+     */
+    public void processSelection(TutorBean tutor) {
+        System.out.println("BookingCtrl: Selezionato tutor " + tutor.getName());
     }
 }

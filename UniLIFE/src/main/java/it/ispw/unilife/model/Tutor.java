@@ -1,16 +1,99 @@
 package it.ispw.unilife.model;
 
+import it.ispw.unilife.bean.TutorBean;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Entity che rappresenta un Tutor nel sistema.
+ * L'ID è stato rimosso per design del team.
+ */
 public class Tutor {
-    private static Tutor instance = null;
 
+    private String name;
+    private String surname;
+    private List<String> subjects;
+    private double hourlyRate;
+    private int rating;
 
-    private Tutor(){
+    /**
+     * Costruttore completo usato dal DAO o per la logica di business.
+     */
+    public Tutor(String name, String surname, List<String> subjects, double hourlyRate, int rating) {
+        this.name = name;
+        this.surname = surname;
+        this.subjects = (subjects != null) ? subjects : new ArrayList<>();
+        this.hourlyRate = hourlyRate;
+        this.rating = rating;
     }
 
-    public static Tutor getInstance(){
-        if (Tutor.instance == null){
-            Tutor.instance = new Tutor();
+    /**
+     * Costruttore per la creazione di un nuovo tutor (es. registrazione).
+     */
+    public Tutor(String name, String surname, List<String> subjects, double hourlyRate) {
+        this.name = name;
+        this.surname = surname;
+        this.subjects = (subjects != null) ? subjects : new ArrayList<>();
+        this.hourlyRate = hourlyRate;
+        this.rating = 0;
+    }
+
+    /**
+     * Restituisce il nome completo formattato.
+     */
+    public String getFullName() {
+        return this.name + " " + this.surname;
+    }
+
+    /**
+     * Restituisce le materie come stringa separata da virgole.
+     */
+    public String getSubjectsAsString() {
+        if (this.subjects.isEmpty()) return "Nessuna materia";
+        return String.join(", ", this.subjects);
+    }
+
+    /**
+     * Aggiunge una materia alla lista, evitando duplicati.
+     */
+    public void addSubject(String subject) {
+        if (subject != null && !subject.trim().isEmpty()) {
+            if (!this.subjects.contains(subject)) {
+                this.subjects.add(subject);
+            }
         }
-        return Tutor.instance;
+    }
+
+    /**
+     * Controlla se il tutor insegna una determinata materia (case-insensitive).
+     */
+    public boolean teachesSubject(String querySubject) {
+        if (querySubject == null || querySubject.equals("Tutte")) return true;
+
+        for (String s : this.subjects) {
+            if (s.equalsIgnoreCase(querySubject)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Verifica se il tutor rientra in una fascia di prezzo.
+     */
+    public boolean isPriceInRange(double min, double max) {
+        return this.hourlyRate >= min && this.hourlyRate <= max;
+    }
+
+    public String getName() { return name; }
+    public String getSurname() { return surname; }
+    public List<String> getSubjects() { return subjects; }
+    public double getHourlyRate() { return hourlyRate; }
+    public int getRating() { return rating; }
+
+    public void setRating(int rating) {
+        if (rating < 0) this.rating = 0;
+        else if (rating > 5) this.rating = 5;
+        else this.rating = rating;
     }
 }

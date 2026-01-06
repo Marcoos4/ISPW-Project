@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TutorBean {
-    private String id;
     private String name;
     private  String surname;
     private List<String> subjects;
@@ -15,8 +14,7 @@ public class TutorBean {
     public TutorBean(){}
 
     // Costruttore completo
-    public TutorBean(String id, String name, String surname, List<String> subjects, double hourlyRate, int rating){
-        this.id = id;
+    public TutorBean(String name, String surname, List<String> subjects, double hourlyRate, int rating){
         this.name = name;
         this.surname = surname;
         this.subjects = subjects;
@@ -25,9 +23,6 @@ public class TutorBean {
     }
 
     // --- GETTERS & SETTERS ---
-
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
