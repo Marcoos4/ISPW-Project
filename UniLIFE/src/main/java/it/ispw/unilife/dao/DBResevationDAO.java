@@ -1,6 +1,7 @@
 package it.ispw.unilife.dao;
 
 import it.ispw.unilife.model.Reservation;
+import it.ispw.unilife.model.Tutor;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -45,7 +46,7 @@ public class DBResevationDAO implements ReservationDAO{
     }
 
     @Override
-    public List<Reservation> findByTutorAndDate(String tutor, LocalDate date) {
+    public List<Reservation> findByTutorAndDate(Tutor tutor, LocalDate date) {
         return List.of();
     }
 }

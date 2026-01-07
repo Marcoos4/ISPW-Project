@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import it.ispw.unilife.model.Reservation;
 import it.ispw.unilife.model.ReservationStatus;
+import it.ispw.unilife.model.Tutor;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -118,7 +119,7 @@ public class JSONReservationDAO implements ReservationDAO{
     }
 
     @Override
-    public List<Reservation> findByTutorAndDate(String tutor, LocalDate date) {
+    public List<Reservation> findByTutorAndDate(Tutor tutor, LocalDate date) {
         return List.of();
     }
 

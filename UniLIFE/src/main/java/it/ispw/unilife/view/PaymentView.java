@@ -94,10 +94,7 @@ public class PaymentView {
      */
     @FXML
     void onCancelClick(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/view/BookTutor.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(root);
+        Navigator.getNavigatorInstance().goToTutor(event);
     }
 
     private boolean validateInput() {

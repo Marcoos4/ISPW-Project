@@ -2,7 +2,7 @@ package it.ispw.unilife.dao;
 
 import java.util.List;
 
-public class JSONTutorDAO implements TutorDAO{
+public class JSONStudentDAO implements StudentDAO{
     @Override
     public Object getInstance() {
         return null;

@@ -1,4 +1,4 @@
 package it.ispw.unilife.dao;
 
-public interface TutorDAO {
+public interface TutorDAO extends DAO{
 }

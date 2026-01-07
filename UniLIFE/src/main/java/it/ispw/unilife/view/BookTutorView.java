@@ -137,9 +137,9 @@ public class BookTutorView {
     /**
      * Gestisce l'intenzione dell'utente di prenotare uno specifico tutor.
      */
-    private void handleBookingAction(TutorBean tutor, Event event) {
+    private void handleBookingAction(TutorBean tutor, ActionEvent event) {
         try {
-            ReservationView.display(event, tutor);
+            Navigator.getNavigatorInstance().goToReservation(event, tutor);
         } catch (IOException e) {
             System.err.println("Errore nel caricamento della pagina di prenotazione");
             e.printStackTrace();

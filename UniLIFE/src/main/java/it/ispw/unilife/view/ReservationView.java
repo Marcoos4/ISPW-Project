@@ -3,16 +3,10 @@ package it.ispw.unilife.view;
 import it.ispw.unilife.bean.ReservationBean;
 import it.ispw.unilife.bean.TutorBean;
 import it.ispw.unilife.controller.BookingCtrl;
-import it.ispw.unilife.model.Tutor;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -37,26 +31,6 @@ public class ReservationView {
     @FXML private Label detailNameLabel;
     @FXML private Label detailRatingLabel;
     @FXML private VBox otherTutorsContainer;
-
-    /**
-     * Metodo statico per caricare la scena ReservationPage e passare il tutor selezionato.
-     * Gestisce il cambio di scena e l'inizializzazione del controller.
-     *
-     * @param event L'evento che ha scatenato la navigazione.
-     * @param tutor Il bean del tutor selezionato.
-     * @throws IOException Se il file FXML non viene trovato.
-     */
-    public static void display(Event event, TutorBean tutor) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/ReservationPage.fxml"));
-        Parent root = loader.load();
-
-        ReservationView controller = loader.getController();
-        controller.initReservationPage(tutor);
-
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.getScene().setRoot(root);
-    }
 
     @FXML
     public void initialize() {
@@ -139,14 +113,7 @@ public class ReservationView {
             if (this.reservationBean.getStudentName() == null) {
                 this.reservationBean.setStudentName("Studente Corrente");
             }
-
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/PaymentPage.fxml"));
-            Parent root = loader.load();
-            PaymentView paymentView = loader.getController();
-            paymentView.initData(reservationBean);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root);
+            Navigator.getNavigatorInstance().goToPayment(event, reservationBean);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -161,10 +128,7 @@ public class ReservationView {
      */
     @FXML
     void onBackToTutor(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/BookTutor.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(root);
+        Navigator.getNavigatorInstance().goToTutor(event);
     }
 
     @FXML
