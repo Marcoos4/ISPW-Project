@@ -2,9 +2,10 @@ package it.ispw.unilife.dao;
 
 public class JSONDAOFactory extends DAOFactory{
 
-    @Override
-    public CourseDAO getCourseDAO() { return new JSONCourseDAO(); }
+    public JSONDAOFactory() {
+        super();
+    }
 
     @Override
-    public UniversityDAO getUniversityDAO() { return new JSONUniversityDAO(); }
+    public UserDAO getUserDAO(){ return new JSONUserDAO();}
 }

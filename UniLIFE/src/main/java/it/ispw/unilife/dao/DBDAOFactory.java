@@ -8,9 +8,6 @@ public class DBDAOFactory extends DAOFactory {
     }
 
     @Override
-    public CourseDAO getCourseDAO() { return new DBCourseDAO(); }
-
-    @Override
-    public UniversityDAO getUniversityDAO() { return new DBUniversityDAO(); }
+    public UserDAO getUserDAO(){ return new DBUserDAO();}
 
 }
