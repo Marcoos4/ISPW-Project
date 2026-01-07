@@ -34,7 +34,7 @@ public class BookingCtrl {
      * @param reservation Il model contenente i dati della prenotazione da salvare.
      */
     private void saveReservation(Reservation reservation) {
-        ReservationDAO reservationDAO = DAOFactory.getDAOFactory().getReservationDAO("fs");
+        ReservationDAO reservationDAO = DAOFactory.getDAOFactory().getReservationDAO();
         reservationDAO.insert(reservation);
     }
 

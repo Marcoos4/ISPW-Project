@@ -6,7 +6,7 @@ import it.ispw.unilife.model.Tutor;
 import java.time.LocalDate;
 import java.util.List;
 
-public class DBResevationDAO implements ReservationDAO{
+public class DBReservationDAO implements ReservationDAO{
 
     @Override
     public Reservation getInstance() {

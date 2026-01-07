@@ -1,27 +1,26 @@
 package it.ispw.unilife.dao;
 
-public class DAOFactory {
+import it.ispw.unilife.config.Configuration;
+import it.ispw.unilife.config.PersistencyMode;
+
+public abstract class DAOFactory {
+
     private static DAOFactory instance = null;
 
-    private DAOFactory(){}
+    protected DAOFactory(){}
 
-    public synchronized static DAOFactory getDAOFactory(){
-        if (DAOFactory.instance == null) {
-            DAOFactory.instance = new DAOFactory();
+    public static synchronized DAOFactory getDAOFactory(){
+
+        if(instance == null){
+            Configuration config = Configuration.getInstance();
+            PersistencyMode mode = config.getPersistencyMode();
+            if(mode.equals(PersistencyMode.JDBC))
+                instance = new DBDAOFactory();
+            else
+                instance = new JSONDAOFactory();
         }
-
         return instance;
     }
 
-    public ReservationDAO getReservationDAO(String type) throws IllegalArgumentException {
-        switch (type.toLowerCase()){
-            case "db" -> {
-                return new DBResevationDAO();
-            }
-            case "fs" -> {
-                return new JSONReservationDAO();
-            }
-            default -> throw new IllegalArgumentException();
-        }
-    }
+    public abstract ReservationDAO getReservationDAO();
 }
