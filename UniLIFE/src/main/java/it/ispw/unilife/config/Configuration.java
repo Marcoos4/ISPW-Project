@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class Configuration{
 
-    private static Configuration instance;
+    private static Configuration instance = null;
 
     private static final String CONFIG_FILE_PATH = "res/config.properties";
     private static final String CONFIG_UI_MODE_PROP = "ui_mode";
@@ -19,14 +19,14 @@ public class Configuration{
 
     private Configuration() {}
 
-    public static Configuration getInstance() {
+    public static synchronized Configuration getInstance() {
         if (instance == null) {
             instance = new Configuration();
         }
         return instance;
     }
 
-    public void loadConfiguration(String[] args) throws IllegalStateException {
+    public void  loadConfiguration(String[] args) throws IllegalStateException {
 
         if(loaded)
             throw new IllegalStateException("Config already loaded!");

@@ -61,6 +61,31 @@ public class ExploreCoursesController {
 
         CourseBean bean = new CourseBean();
 
+        bean.setName(course.getName());
+        bean.setTags(course.getTags());
+
+        if (course.getUniversity() != null) {
+            bean.setUniversity(course.getUniversity().getName());
+            bean.setRegion(course.getUniversity().getRegion());
+        } else {
+            bean.setUniversity("N/A");
+            bean.setRegion("N/A");
+        }
+
+        bean.setFaculty(course.getFaculty());
+        bean.setAnnualCost(String.format("%d €", course.getCostEstimate()));
+
+        int affinity = course.getStudentAffinity();
+        if (affinity > 0) {
+            bean.setAffinity(affinity + "%");
+        } else {
+            bean.setAffinity("N/A");
+        }
+
+
+
+        // Inserire descrizione
+
         return bean;
     }
 

@@ -5,21 +5,23 @@ import it.ispw.unilife.config.PersistencyMode;
 
 public abstract class DAOFactory {
 
-    public static DAOFactory getDAOFactory(){
+    private static DAOFactory instance = null;
 
-        Configuration config = Configuration.getInstance();
-        PersistencyMode mode = config.getPersistencyMode();
+    protected DAOFactory(){}
 
-        if(mode.equals(PersistencyMode.JDBC))
-            return new DBDAOFactory();
-        else
-            return new JSONDAOFactory();
+    public static synchronized DAOFactory getDAOFactory(){
 
+        if(instance == null){
+            Configuration config = Configuration.getInstance();
+            PersistencyMode mode = config.getPersistencyMode();
+            if(mode.equals(PersistencyMode.JDBC))
+                instance = new DBDAOFactory();
+            else
+                instance = new JSONDAOFactory();
+        }
+        return instance;
     }
 
     public abstract CourseDAO getCourseDAO();
-
     public abstract UniversityDAO getUniversityDAO();
-
-
 }
