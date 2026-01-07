@@ -13,5 +13,4 @@ public class DBDAOFactory extends DAOFactory {
     @Override
     public UniversityDAO getUniversityDAO() { return new DBUniversityDAO(); }
 
-
 }
