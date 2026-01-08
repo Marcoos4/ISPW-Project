@@ -1,5 +1,7 @@
 package it.ispw.unilife.dao;
 
-public interface UniversityDAO extends DAO {
+import it.ispw.unilife.model.University;
+
+public interface UniversityDAO extends DAO<University>{
 
 }

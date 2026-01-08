@@ -9,7 +9,7 @@ public class Configuration{
 
     private static Configuration instance = null;
 
-    private static final String CONFIG_FILE_PATH = "res/config.properties";
+    private static final String CONFIG_FILE_PATH = "/config.properties";
     private static final String CONFIG_UI_MODE_PROP = "ui_mode";
     private static final String CONFIG_PERSISTENCY_MODE_PROP = "persistency_mode";
 
@@ -31,7 +31,7 @@ public class Configuration{
         if(loaded)
             throw new IllegalStateException("Config already loaded!");
 
-        try (InputStream confIn = new FileInputStream(CONFIG_FILE_PATH)) {
+        try (InputStream confIn = Configuration.class.getResourceAsStream(CONFIG_FILE_PATH)) {
 
             Properties props = new Properties();
             props.load(confIn);
@@ -53,6 +53,8 @@ public class Configuration{
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid values passed inside config files.\nUsing Default config!");
         }
+
+        System.out.println("Configuration from " + CONFIG_FILE_PATH + "loaded");
 
         for (String arg : args){
             switch (arg.toLowerCase()) {

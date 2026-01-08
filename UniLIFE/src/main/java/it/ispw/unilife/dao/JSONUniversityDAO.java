@@ -1,4 +1,4 @@
 package it.ispw.unilife.dao;
 
-public class JSONUniversityDAO extends UniversityDAO {
+public class JSONUniversityDAO implements UniversityDAO {
 }

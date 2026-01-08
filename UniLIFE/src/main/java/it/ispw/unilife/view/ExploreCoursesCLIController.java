@@ -1,12 +1,12 @@
 package it.ispw.unilife.view;
 import java.util.Scanner;
 
-public class ExploreCoursesCLI {
+public class ExploreCoursesCLIController {
 
     private final Scanner scanner;
     private final String pageTitle;
 
-    public ExploreCoursesCLI(){
+    public ExploreCoursesCLIController(){
         this.scanner = new Scanner(System.in);
         this.pageTitle = "Explore Courses";
     }

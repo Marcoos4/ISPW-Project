@@ -22,6 +22,6 @@ public class FilteredSearch implements Search{
     }
     @Override
     public List<Course> execute(CourseDAO dao) throws DAOException {
-
+        return null;
     }
 }
