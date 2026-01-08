@@ -1,6 +1,9 @@
-package it.ispw.unilife.model;
+package it.ispw.unilife.bean;
 
-public class User {
+// Se hai un enum per il ruolo, usalo, altrimenti usa String
+import it.ispw.unilife.model.Role;
+
+public class UserBean {
 
     private String userName;
     private String name;
@@ -8,16 +11,6 @@ public class User {
     private String email;
     private String password;
     private Role role;
-
-
-    public User(String userName, String name, String surname, String email, String password, Role role) {
-        this.userName = userName;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
 
     public String getUserName() { return userName; }
     public void setUserName(String userName) { this.userName = userName; }
