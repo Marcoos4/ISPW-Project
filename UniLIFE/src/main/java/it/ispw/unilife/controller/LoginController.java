@@ -27,21 +27,29 @@ public class LoginController {
 
             SessionManager.getInstance().createSession(user);
 
-
         } catch (UserNotFoundException e) {
             throw new LoginException("Credenziali non valide");
-        } catch (Exception e) {
+        } catch (LoginException e) {
             throw new LoginException("Errore di sistema durante il login");
         }
     }
 
-    public void googleLogin(UserBean userBean) throws Exception {
-        ExternalAuthBoundary boundary = new GoogleAuthBoundary();
-        userBean =  boundary.authenticate();
-    }
+    public void externalLogin(UserBean userBean, String service){
+        ExternalAuthBoundary boundary;
 
-    public void appleLogin(UserBean userBean){
-        ExternalAuthBoundary appleBoundary = new AppleAuthBoundary();
+        if("Apple".equalsIgnoreCase(service))
+            boundary = new AppleAuthBoundary();
+        else
+            boundary = new GoogleAuthBoundary();
+
+        try {
+            UserBean boundBean = boundary.authenticate();
+            User user = convertUserBeanToModel(boundBean);
+            SessionManager.getInstance().createSession(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void register(UserBean userBean) throws RegistrationException {
@@ -56,17 +64,19 @@ public class LoginController {
         String name = userBean.getName();
         String surname = userBean.getSurname();
 
-        String email = userBean.getEmail();
         Role role = userBean.getRole();
 
-        User user = new User(usrName, name, surname, email, pwd, role);
-
         try {
-            UserDAO dao = DAOFactory.getDAOFactory().getUserDAO();
-            dao.insert(user);
-        } catch (Exception e) {
+            UserDAO userDao = DAOFactory.getDAOFactory().getUserDAO();
+            userDao.registerUser(usrName, name, surname, pwd, role);
+
+        } catch (RegistrationException e) {
             throw new RegistrationException("Errore tecnico durante la registrazione");
         }
+    }
+
+    private User convertUserBeanToModel(UserBean bean){
+        return null;
     }
 }
 

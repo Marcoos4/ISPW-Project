@@ -17,7 +17,7 @@ public class SessionManager {
         return instance;
     }
 
-    public void createSession(User user) {
+    public synchronized  void createSession(User user) {
         this.currentSession = new Session(user);
     }
 

@@ -19,7 +19,7 @@ public class Configuration{
 
     private Configuration() {}
 
-    public static Configuration getInstance() {
+    public static synchronized Configuration getInstance() {
         if (instance == null) {
             instance = new Configuration();
         }

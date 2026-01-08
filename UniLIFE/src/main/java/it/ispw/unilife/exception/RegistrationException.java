@@ -1,5 +1,5 @@
 package it.ispw.unilife.exception;
 
-public class RegistrationException extends Throwable {
-    public RegistrationException(String s) {}
+public class RegistrationException extends Exception {
+    public RegistrationException (String errStr){System.out.println(errStr);}
 }

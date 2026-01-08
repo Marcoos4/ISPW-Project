@@ -1,41 +1,22 @@
 package it.ispw.unilife.dao;
 
+import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
+import it.ispw.unilife.model.Role;
 import it.ispw.unilife.model.User;
 
 import java.util.List;
 
 public class DBUserDAO implements UserDAO{
+
     @Override
-    public User getInstance() {
+    public User findUserByUsernameAndPassword(String username, String password) throws UserNotFoundException {
         return null;
     }
 
     @Override
-    public List<User> getAll() {
-        return List.of();
-    }
-
-    @Override
-    public int insert(User user) {
-        return 0;
-    }
-
-    @Override
-    public int delete() {
-        return 0;
-    }
-
-    @Override
-    public int update() {
-        return 0;
-    }
-
-    @Override
-    public void saveTo() { }
-
-    @Override
-    public User findUserByUsernameAndPassword(String username, String password) throws UserNotFoundException {
+    public User registerUser(String username, String name, String surname, String password, Role role)
+            throws RegistrationException{
         return null;
     }
 }
