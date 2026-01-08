@@ -1,5 +1,6 @@
 package it.ispw.unilife.view; // NOTA IL PACKAGE
 
+import com.google.api.client.auth.oauth2.Credential;
 import it.ispw.unilife.bean.UserBean;
 import it.ispw.unilife.boundary.GoogleAuthBoundary;
 import it.ispw.unilife.controller.LoginController; // Questo è l'unico vero controller
@@ -39,13 +40,13 @@ public class LoginView { // NOME CORRETTO
         try {
             // L'Adapter è un componente tecnico, può essere chiamato dalla View
             // per ottenere i dati grezzi, che poi passiamo al Controller.
-            GoogleAuthBoundary googleAdapter = new GoogleAuthBoundary();
-            UserBean googleUser = googleAdapter.authenticate();
+            LoginController controller = new LoginController();
+            controller.externalLogin(new UserBean(), "Google");
 
             // Passiamo il bean al controller applicativo per la logica di business
             // loginController.completeExternalLogin(googleUser);
 
-            showAlert("Successo", "Benvenuto " + googleUser.getName());
+            //showAlert("Successo", "Benvenuto " + googleUser.getName());
 
         } catch (Exception e) {
             e.printStackTrace();

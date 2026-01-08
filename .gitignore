@@ -3,7 +3,7 @@
 # ======================================
 # Ignora il file con le chiavi segrete di Google/GitHub
 client_secret.json
-src/main/resources/client_secret.json
+src/main/resources/client_secrets.json
 credentials.json
 
 # Ignora la cartella dove vengono salvati i login attivi (sessioni utente)

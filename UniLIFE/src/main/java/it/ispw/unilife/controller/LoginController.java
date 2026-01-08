@@ -1,12 +1,12 @@
 package it.ispw.unilife.controller;
 
+import com.google.api.client.auth.oauth2.Credential;
 import it.ispw.unilife.bean.UserBean;
-import it.ispw.unilife.boundary.AppleAuthBoundary;
+import it.ispw.unilife.boundary.GithubAuthBoundary;
 import it.ispw.unilife.boundary.ExternalAuthBoundary;
 import it.ispw.unilife.boundary.GoogleAuthBoundary;
 import it.ispw.unilife.dao.DAOFactory;
 import it.ispw.unilife.dao.UserDAO;
-import it.ispw.unilife.exception.DuplicateUserException;
 import it.ispw.unilife.exception.LoginException;
 import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
@@ -38,14 +38,14 @@ public class LoginController {
         ExternalAuthBoundary boundary;
 
         if("Apple".equalsIgnoreCase(service))
-            boundary = new AppleAuthBoundary();
+            boundary = new GithubAuthBoundary();
         else
             boundary = new GoogleAuthBoundary();
 
         try {
-            UserBean boundBean = boundary.authenticate();
-            User user = convertUserBeanToModel(boundBean);
-            SessionManager.getInstance().createSession(user);
+            UserBean userB = boundary.authenticate();
+            User user = convertUserBeanToModel(userB);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
