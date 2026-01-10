@@ -1,5 +1,6 @@
 package it.ispw.unilife;
 
+import it.ispw.unilife.config.Configuration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,11 +12,11 @@ import java.io.IOException;
 public class Main extends Application {
 
     // Definisco la scena iniziale
-    private static final String LOGIN_FXML = "/view/Login.fxml";
+    private static final String LOGIN_FXML = "/it/ispw/unilife/Login.fxml";
 
     @Override
     public void start(Stage stage) throws IOException {
-        // 1. Carica il file FXML
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LOGIN_FXML));
 
         // Controllo di sicurezza: se il percorso è sbagliato, avvisa subito
@@ -31,11 +32,16 @@ public class Main extends Application {
         // 3. Configura lo Stage (la finestra)
         stage.setTitle("UniLife - Login");
         stage.setScene(scene);
-        stage.setResizable(false); // Opzionale: blocca il ridimensionamento
         stage.show();
     }
 
     public static void main(String[] args) {
+        try {
+            Configuration.getInstance().loadConfiguration(args);
+        } catch (IllegalStateException e) {
+            System.err.println("Tried to reload App config: " + e.getMessage());
+            return;
+        }
         launch();
     }
 }

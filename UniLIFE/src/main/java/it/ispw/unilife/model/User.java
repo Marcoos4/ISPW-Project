@@ -9,12 +9,20 @@ public class User {
     private Role role;
 
 
-    public User(String userName, String name, String surname, String email, String password, Role role) {
+    public User(String userName, String name, String surname, String password, Role role) {
         this.userName = userName;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.role = role;
+    }
+
+    public boolean checkAccount(String username){
+        return this.userName.equals(username);
+    }
+
+    public boolean checkPermission(Role requestedRole, User user){
+        return user.getRole() == requestedRole;
     }
 
     public String getUserName() { return userName; }

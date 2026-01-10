@@ -7,9 +7,11 @@ import it.ispw.unilife.model.User;
 
 public interface UserDAO extends DAO<User>{
 
-    public User findUserByUsernameAndPassword(String username, String password)
+    User findUserByUsernameAndPassword(String username, String password)
             throws UserNotFoundException;
 
-    public User registerUser(String username, String name, String surname, String password, Role role)
+    void registerUser(User user)
             throws RegistrationException;
+
+    User findUserForExternalLogin(String username) throws UserNotFoundException;
 }

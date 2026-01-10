@@ -2,8 +2,9 @@ package it.ispw.unilife.view;
 
 //import it.ispw.unilife.bean.ReservationBean;
 //import it.ispw.unilife.bean.TutorBean;
+import it.ispw.unilife.bean.UserBean;
+import it.ispw.unilife.controller.LoginController;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -50,4 +51,73 @@ public class Navigator {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.getScene().setRoot(root);
     }*/
+
+    public void goToRegistration(ActionEvent event, UserBean userBean) throws IOException {
+        FXMLLoader loader = new FXMLLoader(RegistrationView.class.getResource("/it/ispw/unilife/Registration.fxml"));
+        Parent root = loader.load();
+
+        RegistrationView controller = loader.getController();
+        controller.initRegistrationPage(userBean);
+
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+
+        double optimalWidth = 600.0;
+        double optimalHeight = 600.0;
+
+        stage.setMinWidth(optimalWidth);
+        stage.setMinHeight(optimalHeight);
+
+        boolean needsResize = false;
+
+        if (stage.getWidth() < optimalWidth) {
+            stage.setWidth(optimalWidth);
+            needsResize = true;
+        }
+
+        if (stage.getHeight() < optimalHeight) {
+            stage.setHeight(optimalHeight);
+            needsResize = true;
+        }
+
+        if (needsResize) {
+            stage.centerOnScreen();
+        }
+
+        stage.getScene().setRoot(root);
+    }
+
+    public void goToLogin(ActionEvent event, UserBean userBean) throws IOException{
+        FXMLLoader loader = new FXMLLoader(LoginView.class.getResource("/it/ispw/unilife/Login.fxml"));
+        Parent root = loader.load();
+
+        LoginView controller = loader.getController();
+        controller.initLoginPage(userBean);
+
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        double optimalWidth = 600.0;
+        double optimalHeight = 600.0;
+
+        stage.setMinWidth(optimalWidth);
+        stage.setMinHeight(optimalHeight);
+
+        boolean needsResize = false;
+
+        if (stage.getWidth() < optimalWidth) {
+            stage.setWidth(optimalWidth);
+            needsResize = true;
+        }
+
+        if (stage.getHeight() < optimalHeight) {
+            stage.setHeight(optimalHeight);
+            needsResize = true;
+        }
+
+        if (needsResize) {
+            stage.centerOnScreen();
+        }
+
+        stage.getScene().setRoot(root);
+    }
 }
