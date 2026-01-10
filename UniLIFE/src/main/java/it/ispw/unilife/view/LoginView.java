@@ -71,19 +71,19 @@ public class LoginView {
         UserBean userBean = new UserBean();
         if (emailField != null) userBean.setUserName(emailField.getText());
         if (passwordField!= null) userBean.setPassword(passwordField.getText());
-        Navigator.getNavigatorInstance().goToRegistration(event, userBean);
+        Navigator.getNavigatorInstance().goToRegistration(userBean);
     }
 
     @FXML
     public void onGoogleLoginClick(ActionEvent event) throws IOException{
         System.out.println("Login Google cliccato");
-        this.loginController.externalLogin(event, "Google");
+        this.loginController.externalLogin("Google");
     }
 
     @FXML
     public void onGithubLoginClick(ActionEvent event) throws IOException {
         System.out.println("Login Github cliccato");
-        loginController.externalLogin(event, "GitHub");
+        loginController.externalLogin("GitHub");
     }
 
 

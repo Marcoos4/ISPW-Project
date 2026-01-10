@@ -10,7 +10,6 @@ import it.ispw.unilife.exception.UserNotFoundException;
 import it.ispw.unilife.model.User;
 import it.ispw.unilife.model.session.SessionManager;
 import it.ispw.unilife.view.Navigator;
-import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -32,12 +31,10 @@ public class LoginController {
 
         } catch (UserNotFoundException e) {
             throw new LoginException("Credenziali non valide");
-        } catch (LoginException e) {
-            throw new LoginException("Errore di sistema durante il login");
         }
     }
 
-    public void externalLogin(ActionEvent event, String service) throws IOException {
+    public void externalLogin(String service) throws IOException {
         ExternalLogin boundary;
 
         if ("GitHub".equalsIgnoreCase(service)) {
@@ -62,30 +59,28 @@ public class LoginController {
             User user = dao.findUserForExternalLogin(externalUserBean.getUserName());
 
             if (user == null) {
-                Navigator.getNavigatorInstance().goToRegistration(event, externalUserBean);
+                Navigator.getNavigatorInstance().goToRegistration(externalUserBean);
             } else {
                 SessionManager.getInstance().createSession(user);
                 UserBean sessionBean = convertUserToBean(user);
-                Navigator.getNavigatorInstance().goToLogin(event, sessionBean);
+                Navigator.getNavigatorInstance().goToLogin(sessionBean);
             }
 
         } catch (UserNotFoundException e) {
-            Navigator.getNavigatorInstance().goToRegistration(event, externalUserBean);
+            Navigator.getNavigatorInstance().goToRegistration(externalUserBean);
         } catch (Exception e){
             throw new RuntimeException();
         }
     }
 
-    public void register(ActionEvent event, UserBean userBean) throws RegistrationException {
+    public void register(UserBean userBean) throws RegistrationException {
 
         try {
             UserDAO userDao = DAOFactory.getDAOFactory().getUserDAO();
             userDao.registerUser(convertUserBeanToModel(userBean));
-            Navigator.getNavigatorInstance().goToLogin(event, userBean);
+            Navigator.getNavigatorInstance().goToLogin(userBean);
         } catch (RegistrationException e) {
             throw new RegistrationException("Errore tecnico durante la registrazione");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

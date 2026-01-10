@@ -11,9 +11,10 @@ public class Configuration {
     private static final Logger logger = Logger.getLogger(Configuration.class.getName());
     private static Configuration instance;
 
-    private static final String CONFIG_FILE_PATH = "/config.properties";
     private static final String CONFIG_UI_MODE_PROP = "ui_mode";
     private static final String CONFIG_PERSISTENCY_MODE_PROP = "persistency_mode";
+
+    private static final String CONFIG_FILE_PATH = "/config.properties";
 
     private UiMode uiMode = UiMode.JFX;
     private PersistencyMode persistencyMode = PersistencyMode.JDBC;
@@ -85,8 +86,9 @@ public class Configuration {
     public PersistencyMode getPersistencyMode() {
         return persistencyMode;
     }
-
     public UiMode getUiMode() {
         return uiMode;
     }
+
+
 }
