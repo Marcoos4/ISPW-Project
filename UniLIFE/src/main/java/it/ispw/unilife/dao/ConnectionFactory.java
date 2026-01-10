@@ -28,6 +28,8 @@ public class ConnectionFactory {
             String pass = properties.getProperty("LOGIN_PASS");
 
             connection = DriverManager.getConnection(connectionUrl, user, pass);
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setAutoCommit(true);
 
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);

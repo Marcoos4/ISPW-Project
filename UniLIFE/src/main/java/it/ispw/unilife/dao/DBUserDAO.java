@@ -11,9 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class DBUserDAO implements UserDAO{
-
+    private static final Logger logger = Logger.getLogger(DBUserDAO.class.getName());
     private static List<User> users = new ArrayList<>();
 
     @Override
@@ -22,10 +23,11 @@ public class DBUserDAO implements UserDAO{
         if (user != null){
             return user;
         }
-        String query = "SELECT * FROM users where username = ? AND password = ?";
+        String query = "SELECT username,name,surname,password,role FROM users where username = ? AND password = ?";
 
-        try(Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement statement = conn.prepareStatement(query)){
+        Connection conn = ConnectionFactory.getConnection();
+
+        try(PreparedStatement statement = conn.prepareStatement(query)){
             statement.setString(1, username);
             statement.setString(2, password);
 
@@ -50,8 +52,9 @@ public class DBUserDAO implements UserDAO{
             throws RegistrationException{
         String query = "INSERT INTO users (username, name, surname, password, role) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        Connection conn = ConnectionFactory.getConnection();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
             // Sostituisci i '?' con i valori reali dell'oggetto User
             stmt.setString(1, user.getUserName());
@@ -61,7 +64,7 @@ public class DBUserDAO implements UserDAO{
             stmt.setString(5, user.getRole().toString());
 
             stmt.executeUpdate(); // Esegue il salvataggio nel DB
-            System.out.println("Utente salvato correttamente nel database!");
+            logger.info("Utente salvato correttamente nel database!");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,10 +77,11 @@ public class DBUserDAO implements UserDAO{
         if (user != null){
             return user;
         }
-        String query = "SELECT * FROM users where username = ?";
+        String query = "SELECT username,name,surname,password,role FROM users where username = ?";
 
-        try(Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement statement = conn.prepareStatement(query)){
+        Connection conn = ConnectionFactory.getConnection();
+
+        try(PreparedStatement statement = conn.prepareStatement(query)){
                 statement.setString(1, username);
 
                 ResultSet resultSet = statement.executeQuery();

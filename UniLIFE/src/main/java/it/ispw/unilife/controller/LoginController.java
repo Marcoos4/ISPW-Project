@@ -13,8 +13,11 @@ import it.ispw.unilife.view.Navigator;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class LoginController {
+
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
     public void login(UserBean userBean) throws LoginException {
         try {
@@ -25,7 +28,7 @@ public class LoginController {
             User user = userDao.findUserByUsernameAndPassword(username, password);
 
             SessionManager.getInstance().createSession(user);
-            System.out.println("Sessione creata");
+            logger.info("Sessione creata");
 
         } catch (UserNotFoundException e) {
             throw new LoginException("Credenziali non valide");

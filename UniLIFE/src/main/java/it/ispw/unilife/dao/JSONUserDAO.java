@@ -11,12 +11,15 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JSONUserDAO implements UserDAO {
 
     private final File file;
     private final Gson gson;
     private List<User> users;
+    private static final Logger logger = Logger.getLogger(JSONUserDAO.class.getName());
 
     public JSONUserDAO() {
         // Cambiamo il nome del file in user.json
@@ -39,7 +42,9 @@ public class JSONUserDAO implements UserDAO {
                     file.getParentFile().mkdirs();
                 }
 
-                file.createNewFile();
+                if(!file.createNewFile()){
+                    logger.log(Level.SEVERE, "Errore nel caricamento del file");
+                }
 
                 // Inizializza con parentesi quadre per il JSON Array vuoto
                 try (FileWriter writer = new FileWriter(file)) {
@@ -48,7 +53,7 @@ public class JSONUserDAO implements UserDAO {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Errore critico: Impossibile creare il file di storage user.json.");
+            logger.log(Level.SEVERE,"Errore critico: Impossibile creare il file di storage user.json.", e);
         }
     }
 

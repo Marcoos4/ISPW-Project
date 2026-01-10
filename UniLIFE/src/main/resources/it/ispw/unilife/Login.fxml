@@ -27,7 +27,7 @@
     </Label>
 
     <VBox maxWidth="300.0" spacing="10.0">
-        <Label text="Email" />
+        <Label text="Username" />
         <TextField fx:id="emailField" promptText="mario.rossi@studenti.uni..." />
 
         <Label text="Password" />

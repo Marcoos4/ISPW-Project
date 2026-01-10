@@ -45,8 +45,8 @@
 
                         <VBox alignment="CENTER_LEFT" spacing="5.0">
                             <children>
-                                <Label text="Email" />
-                                <TextField fx:id="emailField" maxWidth="Infinity" promptText="mario.rossi@studenti.uni..." />
+                                <Label text="Username" />
+                                <TextField fx:id="emailField" maxWidth="Infinity" promptText="davide.falessi@studenti.uni..." />
                             </children>
                         </VBox>
 
