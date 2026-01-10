@@ -2,8 +2,15 @@ package it.ispw.unilife;
 
 import it.ispw.unilife.config.Configuration;
 import it.ispw.unilife.config.UILauncher;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+import java.io.IOException;
+
+public class Main{
 
     public static void main(String[] args) {
 
@@ -16,7 +23,5 @@ public class Main {
 
         UILauncher launcher = UILauncher.getLauncher();
         launcher.startUI();
-
     }
 }
-

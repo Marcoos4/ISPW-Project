@@ -5,8 +5,8 @@ public class FilterSearchBean {
     private String universityName;
     private String faculty;       // Es. "Ingegneria", "Medicina"
     private String courseType;    // Es. "Triennale", "Magistrale"
-    private String region;        // Es. "Lazio", "Lombardia"
-    private Double maxCost;       // Optional
+    private String region;
+    private Double maxCost;
 
     public FilterSearchBean() {
     }

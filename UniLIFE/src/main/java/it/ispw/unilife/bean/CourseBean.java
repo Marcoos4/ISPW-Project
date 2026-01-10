@@ -10,7 +10,7 @@ public class CourseBean {
 
     private String description;
     private String annualCost;   // Ex: "2500.0 €"
-    private String region;
+    private String nation;
     private String faculty;
     private List<String> tags;
 
@@ -29,8 +29,8 @@ public class CourseBean {
     public String getAnnualCost() { return annualCost; }
     public void setAnnualCost(String annualCost) { this.annualCost = annualCost; }
 
-    public String getRegion() { return region; }
-    public void setRegion(String region) { this.region = region; }
+    public String getNation() { return nation; }
+    public void setNation(String nation) { this.nation = nation; }
 
     public String getFaculty() { return faculty; }
     public void setFaculty(String faculty) { this.faculty = faculty; }

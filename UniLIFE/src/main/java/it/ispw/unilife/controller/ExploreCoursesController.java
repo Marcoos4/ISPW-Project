@@ -4,7 +4,7 @@ import it.ispw.unilife.bean.CourseBean;
 import it.ispw.unilife.bean.FilterSearchBean;
 import it.ispw.unilife.bean.InterestSearchBean;
 import it.ispw.unilife.dao.CourseDAO;
-import it.ispw.unilife.dao.DAOFactory;
+import it.ispw.unilife.dao.factory.DAOFactory;
 import it.ispw.unilife.model.Course;
 import it.ispw.unilife.model.search.FilteredSearch;
 import it.ispw.unilife.model.search.InterestSearch;
@@ -66,10 +66,10 @@ public class ExploreCoursesController {
 
         if (course.getUniversity() != null) {
             bean.setUniversity(course.getUniversity().getName());
-            bean.setRegion(course.getUniversity().getRegion());
+            bean.setNation(course.getUniversity().getNation());
         } else {
             bean.setUniversity("N/A");
-            bean.setRegion("N/A");
+            bean.setNation("N/A");
         }
 
         bean.setFaculty(course.getFaculty());
@@ -82,12 +82,6 @@ public class ExploreCoursesController {
             bean.setAffinity("N/A");
         }
 
-
-
-        // Inserire descrizione
-
         return bean;
     }
-
-
 }

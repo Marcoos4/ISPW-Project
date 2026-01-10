@@ -5,7 +5,7 @@ import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.Course;
 import java.util.List;
 
-public class InterestSearch implements Search{
+public class InterestSearch implements Search<Course>{
 
     private List<String> interests;
 

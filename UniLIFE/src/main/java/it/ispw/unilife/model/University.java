@@ -1,20 +1,18 @@
 package it.ispw.unilife.model;
 
-import it.ispw.unilife.dao.UniversityDAO;
-
 public class University {
 
     private String name;
-    private String region;
+    private String nation;
 
-    public University(String name, String region){
+    public University(String name, String nation){
         this.name = name;
-        this.region = region;
+        this.nation = nation;
     }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getRegion() { return region; }
-    public void setRegion(String region) { this.region = region; }
+    public String getNation() { return nation; }
+    public void setNation(String nation) { this.nation = nation; }
 }

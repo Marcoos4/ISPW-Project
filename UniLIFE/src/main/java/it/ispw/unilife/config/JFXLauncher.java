@@ -5,6 +5,6 @@ import javafx.application.Application;
 public class JFXLauncher extends UILauncher{
     @Override
     public void startUI(){
-        Application.launch(JFXApp.class);
+        Application.launch(UniLIFEApp.class);
     }
 }

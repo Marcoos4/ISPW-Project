@@ -5,7 +5,7 @@ import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.Course;
 import java.util.List;
 
-public class FilteredSearch implements Search{
+public class FilteredSearch implements Search<Course>{
 
     private String university;
     private String faculty;
