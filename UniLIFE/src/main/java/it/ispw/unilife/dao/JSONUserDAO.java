@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
-import it.ispw.unilife.model.Role;
 import it.ispw.unilife.model.User;
 
 import java.io.*;

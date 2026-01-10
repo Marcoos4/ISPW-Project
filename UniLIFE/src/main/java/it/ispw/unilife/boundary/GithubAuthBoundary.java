@@ -49,15 +49,13 @@ public class GithubAuthBoundary {
         stage.setScene(new Scene(webView, 600, 700));
 
         engine.locationProperty().addListener((obs, oldUrl, newUrl) -> {
-            if (newUrl != null) {
-                if (newUrl.contains("code=")) {
+                if (newUrl != null && newUrl.contains("code=")) {
                     String[] parts = newUrl.split("code=");
                     if (parts.length > 1) {
                         this.capturedCode = parts[1].split("&")[0];
                         stage.close();
                     }
                 }
-            }
         });
 
         engine.load(AUTH_URL);

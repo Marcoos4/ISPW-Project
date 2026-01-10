@@ -34,7 +34,7 @@ public class ConnectionFactory {
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection(){
         return connection;
     }
 }

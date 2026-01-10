@@ -34,24 +34,24 @@ public class LoginView {
         String pwd = passwordField.getText();
 
         if (userOrEmail.isEmpty() || pwd.isEmpty()) {
-            mostraErrore("Campi mancanti", "Inserisci le tue credenziali per accedere.");
+            showAlert("Campi mancanti", "Inserisci le tue credenziali per accedere.");
             return;
         }
 
         if (pwd.length() < 8) {
-            mostraErrore("Password troppo corta", "La password deve contenere almeno 8 caratteri.");
+            showAlert("Password troppo corta", "La password deve contenere almeno 8 caratteri.");
             passwordField.clear();
             return;
         }
 
         if (userOrEmail.contains("@")) {
             if (!isValidEmail(userOrEmail)) {
-                mostraErrore("Formato Email Errato", "L'indirizzo email inserito non è valido.");
+                showAlert("Formato Email Errato", "L'indirizzo email inserito non è valido.");
                 return;
             }
         } else {
             if (userOrEmail.length() < 8) {
-                mostraErrore("Username non valido", "Se usi un username, deve essere di almeno 8 caratteri.");
+                showAlert("Username non valido", "Se usi un username, deve essere di almeno 8 caratteri.");
                 return;
             }
         }
@@ -62,7 +62,7 @@ public class LoginView {
             userBean.setPassword(pwd);
             this.loginController.login(userBean);
         } catch (Exception e) {
-            mostraErrore("Login Fallito", "Credenziali non valide. Riprova.");
+            showAlert("Login Fallito", "Credenziali non valide. Riprova.");
         }
     }
 
@@ -96,21 +96,11 @@ public class LoginView {
     }
 
     public void initLoginPage(UserBean userBean) {
-        if (userBean != null) {
-            if (userBean.getUserName() != null) emailField.setText(userBean.getUserName());
-        }
+            if (userBean != null && userBean.getUserName() != null) emailField.setText(userBean.getUserName());
     }
 
     private boolean isValidEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         return pattern.matcher(email).matches();
-    }
-
-    private void mostraErrore(String titolo, String messaggio) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore di Accesso");
-        alert.setHeaderText(titolo);
-        alert.setContentText(messaggio);
-        alert.showAndWait();
     }
 }

@@ -1,9 +1,6 @@
 package it.ispw.unilife.view;
 
-//import it.ispw.unilife.bean.ReservationBean;
-//import it.ispw.unilife.bean.TutorBean;
 import it.ispw.unilife.bean.UserBean;
-import it.ispw.unilife.controller.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

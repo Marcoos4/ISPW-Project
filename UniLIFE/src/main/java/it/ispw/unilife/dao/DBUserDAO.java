@@ -4,7 +4,6 @@ import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
 import it.ispw.unilife.model.Role;
 import it.ispw.unilife.model.User;
-import it.ispw.unilife.view.RegistrationView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,11 +14,7 @@ import java.util.List;
 
 public class DBUserDAO implements UserDAO{
 
-    private static List<User> users;
-
-    public DBUserDAO(){
-        users = new ArrayList<>();
-    }
+    private static List<User> users = new ArrayList<>();
 
     @Override
     public User findUserByUsernameAndPassword(String username, String password) throws UserNotFoundException {
