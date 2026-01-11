@@ -32,6 +32,44 @@ public class DBCourseDAO implements CourseDAO {
 
     private static final String DELETE_QUERY = "DELETE FROM courses WHERE name = ?";
 
+    private static final String QUERY_DISTINCT_FACULTY =
+            "SELECT DISTINCT faculty " +
+                    "FROM courses " +
+                    "ORDER BY faculty";
+    private static final String QUERY_DISTINCT_LANGUAGE =
+            "SELECT DISTINCT language " +
+                    "FROM courses " +
+                    "ORDER BY language";
+
+    private static final String QUERY_DISTINCT_UNI =
+            "SELECT DISTINCT university_name " +
+            "FROM courses " +
+            "ORDER BY university_name";
+    private static final String QUERY_DISTINCT_TYPE =
+            "SELECT DISTINCT course_type " +
+                    "FROM courses " +
+                    "ORDER BY course_type";
+
+    @Override
+    public List<String> getDistinctFaculties() throws DAOException {
+        return getDistinctStrings(QUERY_DISTINCT_FACULTY, "faculty");
+    }
+
+    @Override
+    public List<String> getDistinctLanguages() throws DAOException {
+        return getDistinctStrings(QUERY_DISTINCT_LANGUAGE, "language");
+    }
+
+    @Override
+    public List<String> getDistinctUniversities() throws DAOException {
+        return getDistinctStrings(QUERY_DISTINCT_UNI, "university_name");
+    }
+
+    @Override
+    public List<String> getDistinctCourseTypes() throws DAOException {
+        return getDistinctStrings(QUERY_DISTINCT_TYPE, "course_type");
+    }
+
     @Override
     public List<Course> getAll() throws DAOException {
         List<Course> courses = new ArrayList<>();
@@ -141,5 +179,24 @@ public class DBCourseDAO implements CourseDAO {
             logger.log(Level.SEVERE, "DB Error in delete course", e);
             throw new DAOException("Errore durante l'eliminazione del corso.");
         }
+    }
+
+    private List<String> getDistinctStrings(String query, String columnName) throws DAOException {
+        List<String> results = new ArrayList<>();
+        Connection conn = ConnectionFactory.getConnection();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String val = rs.getString(columnName);
+                if (val != null && !val.trim().isEmpty()) {
+                    results.add(val);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can't find filters for: " + columnName);
+        }
+        return results;
     }
 }

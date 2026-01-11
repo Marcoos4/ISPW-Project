@@ -60,5 +60,4 @@ public class FilterSearchBean {
         this.maxCost = maxCost;
     }
 
-
 }

@@ -2,8 +2,6 @@ package it.ispw.unilife.controller;
 
 import it.ispw.unilife.bean.CourseBean;
 import it.ispw.unilife.bean.FilterSearchBean;
-import it.ispw.unilife.bean.InterestSearchBean;
-import it.ispw.unilife.config.Configuration;
 import it.ispw.unilife.dao.CourseDAO;
 import it.ispw.unilife.dao.factory.DAOFactory;
 import it.ispw.unilife.exception.DAOException;
@@ -59,6 +57,62 @@ public class ExploreCoursesController {
         return beanList;
     }
 
+    public List<FilterSearchBean> getAvailableFaculties() {
+        List<FilterSearchBean> beanList = new ArrayList<>();
+        try {
+            List<String> faculties = courseDao.getDistinctFaculties();
+
+            for (String faculty : faculties) {
+                beanList.add(new FilterSearchBean(null, null, faculty, null, null, -1));
+            }
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return beanList;
+    }
+
+    public List<FilterSearchBean> getAvailableUniversities() {
+        List<FilterSearchBean> beanList = new ArrayList<>();
+        try {
+            List<String> unis = courseDao.getDistinctUniversities();
+
+            for (String uni : unis) {
+                beanList.add(new FilterSearchBean(uni, null, null, null, null, -1));
+            }
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return beanList;
+    }
+
+    public List<FilterSearchBean> getAvailableLanguages() {
+        List<FilterSearchBean> beanList = new ArrayList<>();
+        try {
+            List<String> langs = courseDao.getDistinctLanguages();
+
+            for (String lang : langs) {
+                beanList.add(new FilterSearchBean(null, lang, null, null, null, -1));
+            }
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return beanList;
+    }
+
+
+    public List<FilterSearchBean> getAvailableCourseTypes() {
+        List<FilterSearchBean> beanList = new ArrayList<>();
+        try {
+            List<String> types = courseDao.getDistinctCourseTypes();
+
+            for (String type : types) {
+                beanList.add(new FilterSearchBean(null, null, null, type, null, -1));
+            }
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return beanList;
+    }
 
     private CourseBean convertCourseToBean(Course course){
 

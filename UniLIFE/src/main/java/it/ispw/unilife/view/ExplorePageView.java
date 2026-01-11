@@ -2,9 +2,7 @@ package it.ispw.unilife.view;
 
 import it.ispw.unilife.bean.CourseBean;
 import it.ispw.unilife.bean.FilterSearchBean;
-import it.ispw.unilife.bean.InterestSearchBean;
 import it.ispw.unilife.controller.ExploreCoursesController;
-import it.ispw.unilife.view.Navigator;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import javax.sql.rowset.spi.SyncFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExplorePageView {
@@ -37,10 +35,7 @@ public class ExplorePageView {
 
     @FXML
     public void initialize() {
-
-        universityCombo.getItems().addAll("Sapienza", "Tor Vergata", "Roma Tre");
-        courseTypeCombo.getItems().addAll("Laurea Triennale", "Laurea Magistrale");
-
+        findFilters();
     }
 
     @FXML
@@ -50,11 +45,6 @@ public class ExplorePageView {
 
     @FXML
     public void onSearchClick() {
-//        String query = searchBar.getText();
-//        InterestSearchBean bean = new InterestSearchBean(query);
-//        List<CourseBean> results = appController.searchByInterest(bean);
-//
-//        updateResultsView(results);
     }
 
     @FXML
@@ -119,5 +109,52 @@ public class ExplorePageView {
         });
 
         return card;
+    }
+
+    private void findFilters() {
+        // FACULTIES
+        List<FilterSearchBean> facultyBeans = appController.getAvailableFaculties();
+        List<String> facultyStrings = new ArrayList<>();
+
+        for (FilterSearchBean bean : facultyBeans) {
+            if (bean.getFaculty() != null) {
+                facultyStrings.add(bean.getFaculty());
+            }
+        }
+        facultyCombo.getItems().setAll(facultyStrings);
+
+        // UNIVERSITIES
+        List<FilterSearchBean> uniBeans = appController.getAvailableUniversities();
+        List<String> uniStrings = new ArrayList<>();
+
+        for (FilterSearchBean bean : uniBeans) {
+            if (bean.getUniversityName() != null) {
+                uniStrings.add(bean.getUniversityName());
+            }
+        }
+        universityCombo.getItems().setAll(uniStrings);
+
+        // COURSE TYPES
+        List<FilterSearchBean> typeBeans = appController.getAvailableCourseTypes();
+        List<String> typeStrings = new ArrayList<>();
+
+        for (FilterSearchBean bean : typeBeans) {
+            if (bean.getCourseType() != null) {
+                typeStrings.add(bean.getCourseType());
+            }
+        }
+        courseTypeCombo.getItems().setAll(typeStrings);
+
+        // LANGUAGES --TODO: ADD LANGUAGE COMBO
+
+//        List<FilterSearchBean> langBeans = appController.getAvailableLanguages();
+//        List<String> langStrings = new ArrayList<>();
+//
+//        for (FilterSearchBean bean : langBeans) {
+//            if (bean.getLanguage() != null) {
+//                langStrings.add(bean.getLanguage());
+//            }
+//        }
+//        languageCombo.getItems().setAll(langStrings);
     }
 }
