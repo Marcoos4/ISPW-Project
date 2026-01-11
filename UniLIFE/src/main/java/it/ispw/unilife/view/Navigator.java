@@ -1,9 +1,8 @@
 package it.ispw.unilife.view;
 
+import it.ispw.unilife.bean.CourseBean;
 import it.ispw.unilife.bean.UserBean;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -93,6 +92,40 @@ public class Navigator {
             System.err.println("ERROR: Can't load Registration.fxml");
             e.printStackTrace();
         }
+    }
+
+    public void goToExplorePage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/ExplorePage.fxml"));
+            Parent root = loader.load();
+
+            double optimalWidth = 900.0;
+            double optimalHeight = 600.0;
+
+            boolean needsResize = false;
+
+            if (this.primaryStage.getWidth() < optimalWidth) {
+                this.primaryStage.setWidth(optimalWidth);
+                needsResize = true;
+            }
+            if (this.primaryStage.getHeight() < optimalHeight) {
+                this.primaryStage.setHeight(optimalHeight);
+                needsResize = true;
+            }
+            if (needsResize) {
+                this.primaryStage.centerOnScreen();
+            }
+
+            switchScene(root, "UniLife - Esplora Corsi");
+
+        } catch (IOException e) {
+            System.err.println("ERROR: Can't load ExplorePage.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToCourseDetails(CourseBean courseBean){
+        return;
     }
     
     public void setPrimaryStage(Stage stage) { this.primaryStage = stage; }

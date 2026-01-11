@@ -3,19 +3,20 @@ package it.ispw.unilife.bean;
 public class FilterSearchBean {
 
     private String universityName;
-    private String faculty;       // Es. "Ingegneria", "Medicina"
-    private String courseType;    // Es. "Triennale", "Magistrale"
-    private String region;
-    private Double maxCost;
+    private String universityNation;
 
-    public FilterSearchBean() {
-    }
+    private String language;
+    private String faculty;
+    private String courseType;
+    private int maxCost;
 
-    public FilterSearchBean(String universityName, String faculty, String courseType, String region, Double maxCost) {
+
+    public FilterSearchBean(String universityName, String language, String faculty, String courseType, String universityNation, int maxCost) {
         this.universityName = universityName;
+        this.language = language;
         this.faculty = faculty;
         this.courseType = courseType;
-        this.region = region;
+        this.universityNation = universityNation;
         this.maxCost = maxCost;
     }
 
@@ -25,6 +26,16 @@ public class FilterSearchBean {
     public void setUniversityName(String universityName) {
         this.universityName = universityName;
     }
+
+    public String getUniversityNation() {
+        return universityNation;
+    }
+    public void setUniversityNation(String universityNation) {
+        this.universityNation = universityNation;
+    }
+
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
 
     public String getFaculty() {
         return faculty;
@@ -40,27 +51,14 @@ public class FilterSearchBean {
         this.courseType = courseType;
     }
 
-    public String getRegion() {
-        return region;
-    }
-    public void setRegion(String region) {
-        this.region = region;
-    }
 
-    public Double getMaxCost() {
+
+    public int getMaxCost() {
         return maxCost;
     }
-    public void setMaxCost(Double maxCost) {
+    public void setMaxCost(int maxCost) {
         this.maxCost = maxCost;
     }
 
-    // Metodo di utilità per il debug
-    @Override
-    public String toString() {
-        return "FilterSearchBean{" +
-                "university='" + universityName + '\'' +
-                ", faculty='" + faculty + '\'' +
-                ", type='" + courseType + '\'' +
-                '}';
-    }
+
 }

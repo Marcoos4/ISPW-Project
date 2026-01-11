@@ -1,5 +1,7 @@
 package it.ispw.unilife.bean;
 
+import it.ispw.unilife.model.CourseType;
+
 import java.util.List;
 
 public class CourseBean {
@@ -7,7 +9,7 @@ public class CourseBean {
     private String name;
     private String university;
     private String affinity;     // Already Formatted: "85%" o "N/A"
-
+    private CourseType courseType;
     private String description;
     private String annualCost;   // Ex: "2500.0 €"
     private String nation;
@@ -34,6 +36,9 @@ public class CourseBean {
 
     public String getFaculty() { return faculty; }
     public void setFaculty(String faculty) { this.faculty = faculty; }
+
+    public CourseType getCourseType() { return courseType; }
+    public void setCourseType(CourseType courseType) { this.courseType = courseType; }
 
     public List<String> getTags() { return tags; }
     public void setTags(List<String> tags) { this.tags = tags; }

@@ -13,6 +13,7 @@ public class HomePageView {
 
     @FXML
     void goToSearch(ActionEvent event) {
-        Navigator.getNavigatorInstance().goToHome();
+        Navigator.getNavigatorInstance().goToExplorePage();
     }
+
 }

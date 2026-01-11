@@ -1,17 +1,22 @@
 package it.ispw.unilife.dao;
 
 import it.ispw.unilife.dao.factory.ConnectionFactory;
+import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
 import it.ispw.unilife.model.Role;
 import it.ispw.unilife.model.User;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBUserDAO implements UserDAO{
@@ -101,12 +106,28 @@ public class DBUserDAO implements UserDAO{
         throw new UserNotFoundException();
     }
 
+    @Override
+    public void delete(User user) throws DAOException{
+        return;
+    }
+
     private User checkUsers(String username){
         for (User user : users){
             if(user.checkAccount(username))
                 return user;
         }
         return null;
+    }
+
+
+    @Override
+    public List<User> getAll() throws DAOException{
+        return null;
+    }
+
+    @Override
+    public void insert(User user) throws DAOException {
+        return;
     }
 
 }

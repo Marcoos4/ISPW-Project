@@ -3,18 +3,21 @@ package it.ispw.unilife.controller;
 import it.ispw.unilife.bean.CourseBean;
 import it.ispw.unilife.bean.FilterSearchBean;
 import it.ispw.unilife.bean.InterestSearchBean;
+import it.ispw.unilife.config.Configuration;
 import it.ispw.unilife.dao.CourseDAO;
 import it.ispw.unilife.dao.factory.DAOFactory;
+import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.Course;
-import it.ispw.unilife.model.search.FilteredSearch;
-import it.ispw.unilife.model.search.InterestSearch;
-import it.ispw.unilife.model.search.Search;
+import it.ispw.unilife.model.search.FilterSearch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExploreCoursesController {
 
+    private static final Logger logger = Logger.getLogger(ExploreCoursesController.class.getName());
     DAOFactory daoFactory;
     CourseDAO courseDao;
 
@@ -23,31 +26,30 @@ public class ExploreCoursesController {
         this.courseDao = daoFactory.getCourseDAO();
     }
 
-    public List<CourseBean> searchCourses(FilterSearchBean bean) {
+    public List<CourseBean> searchCoursesByFilters(FilterSearchBean bean) {
 
-        String uni = bean.getUniversityName();
-        String fac = bean.getFaculty();
+        List<Course> courses;
+
+        try {
+            courses = courseDao.getAll();
+        } catch (DAOException e) {
+            logger.log(Level.SEVERE, "ERRORE: Can't access courseDAO");
+            return new ArrayList<>();
+
+        }
+
+        String uniName = bean.getUniversityName();
+        String uniNation = bean.getUniversityNation();
+        String faculty = bean.getFaculty();
         String type = bean.getCourseType();
-        String reg = bean.getRegion();
-        Double cost = bean.getMaxCost();
+        String lang = bean.getLanguage();
+        int cost = bean.getMaxCost();
 
-        Search search = new FilteredSearch(uni, fac, type, reg, cost);
-        return executeSearch(search);
 
-    }
-
-    public List<CourseBean> searchCourses(InterestSearchBean bean) {
-
-        List<String> interests = bean.getSelectedInterest();
-
-        Search search = new InterestSearch(interests);
-        return executeSearch(search);
-    }
-
-    private List<CourseBean> executeSearch(Search search){
+        FilterSearch search = new FilterSearch(uniName, uniNation, faculty, type, lang, cost);
+        List<Course> resCourses = search.execute(courses);
 
         List<CourseBean> beanList = new ArrayList<>();
-        List<Course> resCourses =  search.execute(courseDao);
 
         for (Course course : resCourses) {
             CourseBean courseBean = convertCourseToBean(course);
@@ -56,6 +58,7 @@ public class ExploreCoursesController {
 
         return beanList;
     }
+
 
     private CourseBean convertCourseToBean(Course course){
 
@@ -74,6 +77,7 @@ public class ExploreCoursesController {
 
         bean.setFaculty(course.getFaculty());
         bean.setAnnualCost(String.format("%d €", course.getCostEstimate()));
+        bean.setCourseType(course.getCourseType());
 
         int affinity = course.getStudentAffinity();
         if (affinity > 0) {
