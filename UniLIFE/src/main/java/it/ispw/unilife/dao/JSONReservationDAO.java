@@ -4,11 +4,13 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import it.ispw.unilife.model.Reservation;
 import it.ispw.unilife.model.ReservationStatus;
+import it.ispw.unilife.model.Student;
 import it.ispw.unilife.model.Tutor;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,12 @@ public class JSONReservationDAO implements ReservationDAO{
 
     public JSONReservationDAO() {
         this.file = new File("data/reservation.json");
-        this.gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (src, type, ctx) -> new JsonPrimitive(src.toString()))
-                .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, type, ctx) -> LocalDate.parse(json.getAsString()))
-                .registerTypeAdapter(LocalTime.class, (JsonSerializer<LocalTime>) (src, type, ctx) -> new JsonPrimitive(src.toString()))
-                .registerTypeAdapter(LocalTime.class, (JsonDeserializer<LocalTime>) (json, type, ctx) -> LocalTime.parse(json.getAsString()))
+        this.gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (src, type, ctx) ->
+                        new JsonPrimitive(src.toString())
+                )
+                .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, ctx) ->
+                        LocalDateTime.parse(json.getAsString())
+                )
                 .setPrettyPrinting()
                 .create();
         this.reservations = new ArrayList<>();
@@ -77,11 +81,10 @@ public class JSONReservationDAO implements ReservationDAO{
     }
 
     @Override
-    public int insert(Reservation reservation) {
+    public void insert(Reservation reservation) {
 
-        if (reservation.getStatus() == null || reservation.getStatus() == ReservationStatus.PENDING) {
+        if (reservation.getStatus() == null) {
             System.err.println("ERRORE DAO: Tentativo di salvare prenotazione PENDING scartato.");
-            return -1;
         }
 
         getAll();
@@ -89,11 +92,8 @@ public class JSONReservationDAO implements ReservationDAO{
         this.reservations.add(reservation);
 
         saveTo();
-
-        return 0;
     }
 
-    @Override
     public void saveTo() {
         try(Writer writer = new FileWriter(this.file)){
             gson.toJson(this.reservations, writer);
@@ -104,23 +104,30 @@ public class JSONReservationDAO implements ReservationDAO{
     }
 
     @Override
-    public int delete() {
-        return 0;
-    }
-
-    @Override
-    public int update() {
-        return 0;
-    }
-
-    @Override
-    public List<Reservation> findByStudent(String studentName) {
+    public List<Reservation> findByStudent(Student studentName) {
         return List.of();
     }
 
     @Override
     public List<Reservation> findByTutorAndDate(Tutor tutor, LocalDate date) {
         return List.of();
+    }
+
+    @Override
+    public List<Reservation> findByTutor(Tutor tutor) {
+        List<Reservation> tutorReservations = new ArrayList<>();
+        List<Reservation> reservs= getAll();
+        for(Reservation reservation : reservs){
+            if (reservation.getTutor().equals(tutor)){
+                tutorReservations.add(reservation);
+            }
+        }
+        return tutorReservations;
+    }
+
+    @Override
+    public void update(Reservation reservation) {
+
     }
 
 }

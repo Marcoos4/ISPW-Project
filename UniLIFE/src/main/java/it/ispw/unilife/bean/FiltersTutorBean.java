@@ -9,13 +9,6 @@ public class FiltersTutorBean {
     // Costruttore vuoto (Default)
     public FiltersTutorBean() {}
 
-    // Costruttore completo (per comodità)
-    public FiltersTutorBean(String subject, String priceRange, String timeSlot) {
-        this.subject = subject;
-        this.priceRange = priceRange;
-        this.timeSlot = timeSlot;
-    }
-
     // --- GETTERS & SETTERS ---
 
     public String getSubject() {

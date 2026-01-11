@@ -1,10 +1,12 @@
 package it.ispw.unilife.dao;
 
+import it.ispw.unilife.model.Student;
+
 import java.util.List;
 
 public class DBStudentDAO implements StudentDAO{
     @Override
-    public Object getInstance() {
+    public Student getInstance() {
         return null;
     }
 
@@ -14,22 +16,8 @@ public class DBStudentDAO implements StudentDAO{
     }
 
     @Override
-    public int insert(Object o) {
-        return 0;
+    public void insert(Student student) {
+        return;
     }
 
-    @Override
-    public int delete() {
-        return 0;
-    }
-
-    @Override
-    public int update() {
-        return 0;
-    }
-
-    @Override
-    public void saveTo() {
-
-    }
 }

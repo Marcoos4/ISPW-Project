@@ -5,6 +5,7 @@ import it.ispw.unilife.bean.TutorBean;
 import it.ispw.unilife.controller.BookingCtrl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -104,20 +105,20 @@ public class ReservationView {
      * @param event L'evento del click sul bottone.
      */
     @FXML
-    void onConfirmAndPayClick(ActionEvent event) {
-        try {
-            this.reservationBean.setDate(this.selectedDate);
-            this.reservationBean.setStartTime(this.selectedTime);
-            this.reservationBean.setEndTime(this.selectedTime.plusHours(1));
+    void onConfirmAndPayClick(ActionEvent event) throws IOException {
+        this.reservationBean.setDate(this.selectedDate);
+        this.reservationBean.setStartTime(this.selectedTime);
+        this.reservationBean.setEndTime(this.selectedTime.plusHours(1));
+        this.bookingCtrl.pendingReservation(reservationBean);
+        showMessage(
+                "Richiesta Inviata",
+                "Operazione completata con successo",
+                "La tua richiesta è stata inoltrata al tutor.\n" +
+                        "Attendi l'accettazione nella tua Dashboard per procedere.",
+                Alert.AlertType.INFORMATION
+        );
+        Navigator.getNavigatorInstance().goToTutor(event);
 
-            if (this.reservationBean.getStudentName() == null) {
-                this.reservationBean.setStudentName("Studente Corrente");
-            }
-            Navigator.getNavigatorInstance().goToPayment(event, reservationBean);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -134,5 +135,13 @@ public class ReservationView {
     @FXML
     void onSearch(ActionEvent event) {
         // Da implementare
+    }
+
+    private void showMessage(String messTitle, String title, String msg, Alert.AlertType alertType ) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(messTitle);
+        alert.setHeaderText(title);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

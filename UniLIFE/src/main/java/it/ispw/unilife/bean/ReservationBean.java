@@ -7,10 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ReservationBean {
-    private String studentName;
-
-    // Riferimento all'istanza del Tutor (Model)
-    private Tutor tutor;
+    private TutorBean tutor;
+    private StudentBean student;
 
     private LocalDate date;
     private LocalTime startTime;
@@ -22,26 +20,13 @@ public class ReservationBean {
     // Costruttore VUOTO
     public ReservationBean() {}
 
-    // Costruttore COMPLETO
-    public ReservationBean(String studentName, Tutor tutor,
-                           LocalDate date, LocalTime startTime, LocalTime endTime,
-                           double totalPrice, ReservationStatus status) {
-        this.studentName = studentName;
-        this.tutor = tutor;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.totalPrice = totalPrice;
-        this.status = status;
-    }
-
     // --- GETTERS & SETTERS ---
 
-    public String getStudentName() { return studentName; }
-    public void setStudentName(String studentName) { this.studentName = studentName; }
+    public TutorBean getTutor() { return tutor; }
+    public void setTutor(TutorBean tutor) { this.tutor = tutor; }
 
-    public Tutor getTutor() { return tutor; }
-    public void setTutor(Tutor tutor) { this.tutor = tutor; }
+    public StudentBean getStudent() {return student;}
+    public void setStudent(StudentBean student) {this.student = student;}
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }

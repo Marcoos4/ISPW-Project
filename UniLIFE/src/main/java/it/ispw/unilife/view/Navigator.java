@@ -50,4 +50,13 @@ public class Navigator {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.getScene().setRoot(root);
     }
+
+    public void goToStudentReservation(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(StudentReservationView.class.getResource("/it/ispw/unilife/StudentReservationPage.fxml"));
+        Parent root = loader.load();
+
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.getScene().setRoot(root);
+    }
 }

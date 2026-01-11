@@ -10,14 +10,6 @@ public class PaymentBean {
     // Costruttore vuoto
     public PaymentBean() {}
 
-    // Costruttore completo
-    public PaymentBean(String cardHolder, String cardNumber, String expiryDate, String cvv) {
-        this.cardHolder = cardHolder;
-        this.cardNumber = cardNumber;
-        this.expiryDate = expiryDate;
-        this.cvv = cvv;
-    }
-
     // --- GETTERS & SETTERS ---
 
     public String getCardHolder() { return cardHolder; }

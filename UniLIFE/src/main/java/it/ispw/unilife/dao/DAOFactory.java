@@ -2,6 +2,8 @@ package it.ispw.unilife.dao;
 
 import it.ispw.unilife.config.Configuration;
 import it.ispw.unilife.config.PersistencyMode;
+import it.ispw.unilife.model.Student;
+import it.ispw.unilife.model.User;
 
 public abstract class DAOFactory {
 
@@ -23,4 +25,8 @@ public abstract class DAOFactory {
     }
 
     public abstract ReservationDAO getReservationDAO();
+
+    public abstract UserDAO getUserDAO();
+
+    public abstract Student getStudentDAO();
 }

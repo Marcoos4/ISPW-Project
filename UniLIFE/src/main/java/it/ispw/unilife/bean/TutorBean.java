@@ -13,13 +13,13 @@ public class TutorBean {
     // Costruttore vuoto
     public TutorBean(){}
 
-    // Costruttore completo
-    public TutorBean(String name, String surname, List<String> subjects, double hourlyRate, int rating){
-        this.name = name;
-        this.surname = surname;
-        this.subjects = subjects;
-        this.hourlyRate = hourlyRate;
-        this.rating = rating;
+    //TODO Da rimuovere!!!!
+    public TutorBean(String mario, String rossi, List<String> list, double v, int i) {
+        this.name = mario;
+        this.surname = rossi;
+        this.subjects = list;
+        this.hourlyRate = v;
+        this.rating = i;
     }
 
     // --- GETTERS & SETTERS ---

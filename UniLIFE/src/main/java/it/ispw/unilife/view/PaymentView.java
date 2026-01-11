@@ -71,22 +71,19 @@ public class PaymentView {
      * @param event L'evento generato dal click (utile per cambiare scena).
      */
     @FXML
-    void onPayClick(ActionEvent event) {
+    void onPayClick(ActionEvent event) throws IOException {
         if(!validateInput()){
             return;
         }
-
+        PaymentBean paymentBean = new PaymentBean();
+        paymentBean.setCardHolder(txtCardHolder.getText());
+        paymentBean.setCardNumber(txtCardNumber.getText());
+        paymentBean.setExpiryDate(txtExpiry.getText());
+        paymentBean.setCvv(txtCvv.getText());
         boolean success = bookingCtrl.bookLesson(
-                this.reservationBean,
-                new PaymentBean(txtCardHolder.getText(), txtCardNumber.getText(), txtExpiry.getText(), txtCvv.getText())
-        );
+                this.reservationBean,paymentBean);
 
-        if (success) {
-            System.out.println("VIEW: Transazione OK. Reindirizzamento...");
-            // Qui dovresti chiamare un metodo per tornare alla Home o mostrare un alert
-        } else {
-            showError("Errore", "Pagamento rifiutato dal sistema.");
-        }
+        Navigator.getNavigatorInstance().goToStudentReservation(event);
     }
 
     /**

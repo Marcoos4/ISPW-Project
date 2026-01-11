@@ -8,10 +8,8 @@ import java.util.List;
  * Entity che rappresenta un Tutor nel sistema.
  * L'ID è stato rimosso per design del team.
  */
-public class Tutor {
+public class Tutor extends User {
 
-    private String name;
-    private String surname;
     private List<String> subjects;
     private double hourlyRate;
     private int rating;
@@ -19,31 +17,13 @@ public class Tutor {
     /**
      * Costruttore completo usato dal DAO o per la logica di business.
      */
-    public Tutor(String name, String surname, List<String> subjects, double hourlyRate, int rating) {
-        this.name = name;
-        this.surname = surname;
+    public Tutor(String name, String surname, List<String> subjects, double hourlyRate, int rating, String username, String password) {
+        super(username, name, surname, password,Role.TUTOR);
         this.subjects = (subjects != null) ? subjects : new ArrayList<>();
         this.hourlyRate = hourlyRate;
         this.rating = rating;
     }
 
-    /**
-     * Costruttore per la creazione di un nuovo tutor (es. registrazione).
-     */
-    public Tutor(String name, String surname, List<String> subjects, double hourlyRate) {
-        this.name = name;
-        this.surname = surname;
-        this.subjects = (subjects != null) ? subjects : new ArrayList<>();
-        this.hourlyRate = hourlyRate;
-        this.rating = 0;
-    }
-
-    /**
-     * Restituisce il nome completo formattato.
-     */
-    public String getFullName() {
-        return this.name + " " + this.surname;
-    }
 
     /**
      * Restituisce le materie come stringa separata da virgole.
@@ -85,8 +65,6 @@ public class Tutor {
         return this.hourlyRate >= min && this.hourlyRate <= max;
     }
 
-    public String getName() { return name; }
-    public String getSurname() { return surname; }
     public List<String> getSubjects() { return subjects; }
     public double getHourlyRate() { return hourlyRate; }
     public int getRating() { return rating; }

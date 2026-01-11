@@ -1,10 +1,12 @@
 package it.ispw.unilife.dao;
 
+import it.ispw.unilife.model.Tutor;
+
 import java.util.List;
 
 public class JSONTutorDAO implements TutorDAO{
     @Override
-    public Object getInstance() {
+    public Tutor getInstance() {
         return null;
     }
 
@@ -14,21 +16,9 @@ public class JSONTutorDAO implements TutorDAO{
     }
 
     @Override
-    public int insert(Object o) {
-        return 0;
+    public void insert(Tutor tutor) {
     }
 
-    @Override
-    public int delete() {
-        return 0;
-    }
-
-    @Override
-    public int update() {
-        return 0;
-    }
-
-    @Override
     public void saveTo() {
 
     }

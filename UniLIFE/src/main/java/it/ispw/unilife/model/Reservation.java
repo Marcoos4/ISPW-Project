@@ -1,29 +1,28 @@
 package it.ispw.unilife.model;
 
-import it.ispw.unilife.bean.ReservationBean;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class Reservation {
 
-    // Riferimento diretto all'istanza del Tutor
     private Tutor tutor;
-    private String studentName;
-    private LocalDate date;
+    private Student student;
+    private LocalDateTime date;
     private long durationInHours;
-    private String paymentId;
+    private Payment payment;
     private ReservationStatus status;
 
     // -------------------------------------------------------------------------
     // COSTRUTTORI
     // -------------------------------------------------------------------------
 
-    public Reservation(Tutor tutor, String studentName, LocalDate date, long duration) {
+    public Reservation(Tutor tutor, Student student, LocalDateTime date, long duration) {
         this.tutor = tutor;
-        this.studentName = studentName;
+        this.student = student;
         this.date = date;
         this.durationInHours = duration;
         this.status = status;
-        this.paymentId = null;
+        this.payment = null;
     }
 
     // -------------------------------------------------------------------------
@@ -36,13 +35,13 @@ public class Reservation {
         return (long) (this.tutor.getHourlyRate() * this.durationInHours * 100);
     }
 
-    public void updatePayment(ReservationStatus status, String payment_id){
+    public void updatePayment(ReservationStatus status, Payment payment){
         this.status = status;
-        this.paymentId = payment_id;
+        this.payment = payment;
     }
 
     public void cancelBooking() {
-        if (this.date != null && this.date.isBefore(LocalDate.now())) {
+        if (this.date != null && this.date.isBefore(LocalDateTime.now(ZoneId.of("Europe/Rome")))) {
             throw new IllegalStateException("Errore: Impossibile cancellare una lezione passata.");
         }
         this.status = ReservationStatus.CANCELLED;
@@ -53,9 +52,9 @@ public class Reservation {
     // -------------------------------------------------------------------------
 
     public Tutor getTutor() { return tutor; }
-    public String getStudentName() { return studentName; }
-    public LocalDate getDate() { return date; }
+    public Student getStudent() { return student; }
+    public LocalDateTime getDate() { return date; }
     public long getDurationInHours() { return durationInHours; }
-    public String getPaymentId() { return paymentId; }
+    public Payment getPayment() { return payment; }
     public ReservationStatus getStatus() { return this.status; }
 }
