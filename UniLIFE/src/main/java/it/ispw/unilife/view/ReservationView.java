@@ -3,6 +3,7 @@ package it.ispw.unilife.view;
 import it.ispw.unilife.bean.ReservationBean;
 import it.ispw.unilife.bean.TutorBean;
 import it.ispw.unilife.controller.BookingCtrl;
+import it.ispw.unilife.exception.DAOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -105,7 +106,7 @@ public class ReservationView {
      * @param event L'evento del click sul bottone.
      */
     @FXML
-    void onConfirmAndPayClick(ActionEvent event) throws IOException {
+    void onConfirmAndPayClick(ActionEvent event) throws IOException, DAOException {
         this.reservationBean.setDate(this.selectedDate);
         this.reservationBean.setStartTime(this.selectedTime);
         this.reservationBean.setEndTime(this.selectedTime.plusHours(1));

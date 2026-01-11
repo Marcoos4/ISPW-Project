@@ -72,6 +72,16 @@
                 <Font name="System Bold" size="13.0" />
             </font>
         </Button>
+
+        <Button fx:id="guestBtn" maxWidth="Infinity" mnemonicParsing="false"
+                onAction="#onBackToHome"
+                styleClass="orange-button"
+                text="Continua come Guest">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
+
     </VBox>
 
     <Hyperlink fx:id="registrationLink" onAction="#onGoToRegistration" text="Non hai un account? Registrati" textFill="#007aff">

@@ -7,7 +7,7 @@ import java.util.List;
 public class JSONStudentDAO extends JSONDAO<Student> implements StudentDAO{
 
 
-    protected JSONStudentDAO() {
+    public JSONStudentDAO() {
         super("data/student.json", Student.class);
     }
 

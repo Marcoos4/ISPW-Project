@@ -14,5 +14,11 @@ public class JSONDAOFactory extends DAOFactory {
     public CourseDAO getCourseDAO(){ return new JSONCourseDAO();}
     @Override
     public UniversityDAO getUniversityDAO(){return new JSONUniversityDAO();}
+    @Override
+    public JSONReservationDAO getReservationDAO(){
+        return new JSONReservationDAO();
+    }
+    @Override
+    public JSONStudentDAO getStudentDAO(){return new JSONStudentDAO();}
 
 }

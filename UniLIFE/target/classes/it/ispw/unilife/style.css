@@ -37,3 +37,39 @@
 .flat-pane {
     -fx-skin: "javafx.scene.control.skin.TitledPaneSkin";
 }
+
+
+.root-pane {
+    -fx-background-color: #f4f4f4; /* Sfondo grigio chiaro generale */
+}
+
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-family: "System";
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: black;
+}
+
+/* --- Bottone --- */
+.orange-button {
+    -fx-background-color: #e0e0e0; /* Grigio di default come nell'immagine */
+    -fx-text-fill: #333333;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4;
+}
+
+.orange-button {
+    -fx-background-color: #ff9900;
+    -fx-text-fill: white;
+}
+.orange-button:hover {
+    -fx-background-color: #e68a00;
+}
+
+.accordion {
+    -fx-background-color: transparent;
+}

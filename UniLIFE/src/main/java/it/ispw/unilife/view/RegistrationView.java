@@ -76,7 +76,7 @@ public class RegistrationView {
             userBean.setName(name);
             userBean.setPassword(pwd);
 
-            loginController.register(userBean);
+            loginController.register(event, userBean);
 
         } catch (Exception e) {
             mostraErrore("Errore di Registrazione", e.getMessage());
@@ -101,7 +101,7 @@ public class RegistrationView {
         UserBean userBean = new UserBean();
         if (emailField != null) userBean.setUserName(emailField.getText());
         if (passwordField!= null) userBean.setPassword(passwordField.getText());
-        Navigator.getNavigatorInstance().goToLogin(userBean);
+        Navigator.getNavigatorInstance().goToLogin(event, userBean);
     }
 
     public void initRegistrationPage(UserBean userBean) {

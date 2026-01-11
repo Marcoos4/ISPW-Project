@@ -8,12 +8,12 @@ public class HomePageView {
 
     @FXML
     void goToLogin(ActionEvent event) {
-        Navigator.getNavigatorInstance().goToLogin(null);
+        Navigator.getNavigatorInstance().goToLogin(event, null);
     }
 
     @FXML
     void goToSearch(ActionEvent event) {
-        Navigator.getNavigatorInstance().goToExplorePage();
+        Navigator.getNavigatorInstance().goToExplorePage(event);
     }
 
 }

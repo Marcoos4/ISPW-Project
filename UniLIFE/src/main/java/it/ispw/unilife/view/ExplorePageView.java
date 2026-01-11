@@ -3,9 +3,11 @@ package it.ispw.unilife.view;
 import it.ispw.unilife.bean.CourseBean;
 import it.ispw.unilife.bean.FilterSearchBean;
 import it.ispw.unilife.controller.ExploreCoursesController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -39,8 +41,8 @@ public class ExplorePageView {
     }
 
     @FXML
-    public void onHomeClick() {
-        Navigator.getNavigatorInstance().goToHome();
+    public void onHomeClick(ActionEvent event) {
+        Navigator.getNavigatorInstance().goToHome(event);
     }
 
     @FXML

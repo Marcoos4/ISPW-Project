@@ -17,7 +17,6 @@ import java.io.IOException;
 public class Navigator {
 
     private static Navigator instance = null;
-    private Stage primaryStage;
 
     private Navigator(){}
 
@@ -28,26 +27,19 @@ public class Navigator {
         return instance;
     }
 
-    public void goToHome() {
+    public void goToHome(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/HomePage.fxml"));
             Parent root = loader.load();
-    public void goToPayment(ActionEvent event, ReservationBean reservationBean) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/PaymentPage.fxml"));
-        Parent root = loader.load();
-        PaymentView paymentView = loader.getController();
-        paymentView.initData(reservationBean);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(root);
-
-            switchScene(root, "UniLife - Home");
+            Node source = (Node) event.getSource();
+            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Registration");
 
         } catch (IOException e) {
             System.err.println("ERROR: Can't load HomePage.fxml");
         }
     }
 
-    public void goToLogin(UserBean userBean) {
+    public void goToLogin(ActionEvent event, UserBean userBean) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/Login.fxml"));
             Parent root = loader.load();
@@ -55,31 +47,9 @@ public class Navigator {
             LoginView controller = loader.getController();
             controller.initLoginPage(userBean);
 
-            double optimalWidth = 600.0;
-            double optimalHeight = 600.0;
-
-            this.primaryStage.setMinWidth(optimalWidth);
-            this.primaryStage.setMinHeight(optimalHeight);
-
-            boolean needsResize = false;
-            if (this.primaryStage.getWidth() < optimalWidth) {
-                this.primaryStage.setWidth(optimalWidth);
-                needsResize = true;
-            }
-            if (this.primaryStage.getHeight() < optimalHeight) {
-                this.primaryStage.setHeight(optimalHeight);
-                needsResize = true;
-            }
-            if (needsResize)
-                this.primaryStage.centerOnScreen();
-
-            switchScene(root, "UniLife - Login");
-    public void goToTutor(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/BookTutor.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(root);
-    }
+            Node source = (Node) event.getSource();
+            resizeScene(source, 600, 600);
+            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Login");
 
         } catch (IOException e) {
             System.err.println("ERROR: Can't load Login.fxml");
@@ -87,65 +57,33 @@ public class Navigator {
         }
     }
 
-    public void goToRegistration(UserBean userBean) {
+    public void goToRegistration(ActionEvent event, UserBean userBean) {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/Registration.fxml"));
             Parent root = loader.load();
-    public void goToReservation(ActionEvent event, TutorBean tutor) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/ReservationPage.fxml"));
-        Parent root = loader.load();
 
             RegistrationView controller = loader.getController();
             controller.initRegistrationPage(userBean);
 
-            double optimalWidth = 600.0;
-            double optimalHeight = 600.0;
-        ReservationView controller = loader.getController();
-        controller.initReservationPage(tutor);
-
-            if (primaryStage.getWidth() < optimalWidth) primaryStage.setWidth(optimalWidth);
-            if (primaryStage.getHeight() < optimalHeight) primaryStage.setHeight(optimalHeight);
-
-            primaryStage.centerOnScreen();
-
-            switchScene(root, "UniLife - Registrazione");
+            Node source = (Node) event.getSource();
+            resizeScene(source, 600, 600);
+            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Registration");
 
         } catch (IOException e) {
             System.err.println("ERROR: Can't load Registration.fxml");
             e.printStackTrace();
         }
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.getScene().setRoot(root);
     }
 
-    public void goToExplorePage() {
+    public void goToExplorePage(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/ExplorePage.fxml"));
             Parent root = loader.load();
-    public void goToStudentReservation(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(StudentReservationView.class.getResource("/it/ispw/unilife/StudentReservationPage.fxml"));
-        Parent root = loader.load();
 
-            double optimalWidth = 900.0;
-            double optimalHeight = 600.0;
-
-            boolean needsResize = false;
-
-            if (this.primaryStage.getWidth() < optimalWidth) {
-                this.primaryStage.setWidth(optimalWidth);
-                needsResize = true;
-            }
-            if (this.primaryStage.getHeight() < optimalHeight) {
-                this.primaryStage.setHeight(optimalHeight);
-                needsResize = true;
-            }
-            if (needsResize) {
-                this.primaryStage.centerOnScreen();
-            }
-
-            switchScene(root, "UniLife - Esplora Corsi");
+            Node source = (Node) event.getSource();
+            resizeScene(source, 900, 600);
+            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Explore Courses");
 
         } catch (IOException e) {
             System.err.println("ERROR: Can't load ExplorePage.fxml");
@@ -157,26 +95,72 @@ public class Navigator {
         return;
     }
 
-    public void setPrimaryStage(Stage stage) { this.primaryStage = stage; }
-    public Stage getPrimaryStage() { return this.primaryStage; }
 
-    private void switchScene(Parent root, String title) {
-        if (this.primaryStage == null) {
-            System.err.println("ERROR: Didn't correctly init the primary stage");
-            return;
-        }
-
-        if (this.primaryStage.getScene() == null) {
-            Scene scene = new Scene(root);
-            this.primaryStage.setScene(scene);
-        } else {
-            this.primaryStage.getScene().setRoot(root);
-        }
-
-        this.primaryStage.setTitle(title);
-        this.primaryStage.show();
+    public void goToPayment(ActionEvent event, ReservationBean reservationBean) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/PaymentPage.fxml"));
+        Parent root = loader.load();
+        PaymentView paymentView = loader.getController();
+        paymentView.initData(reservationBean);
         Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.getScene().setRoot(root);
+        switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Payment");
+
     }
+
+    public void goToTutor(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/BookTutor.fxml"));
+        Parent root = loader.load();
+        Node source = (Node) event.getSource();
+        switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Registration");
+    }
+
+    public void goToReservation(ActionEvent event, TutorBean tutor) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/ReservationPage.fxml"));
+        Parent root = loader.load();
+
+        ReservationView controller = loader.getController();
+        controller.initReservationPage(tutor);
+
+        Node source = (Node) event.getSource();
+        switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Reservation");
+    }
+
+    public void goToStudentReservation(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(StudentReservationView.class.getResource("/it/ispw/unilife/StudentReservationPage.fxml"));
+        Parent root = loader.load();
+
+        Node source = (Node) event.getSource();
+        switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Student Reservation");
+    }
+
+
+    private void resizeScene(Node source, double optimalWidth, double optimalHeight) {
+        Stage stage = (Stage) source.getScene().getWindow();
+
+        stage.setMinWidth(optimalWidth);
+        stage.setMinHeight(optimalHeight);
+
+        boolean needsResize = false;
+
+        if (stage.getWidth() < optimalWidth) {
+            stage.setWidth(optimalWidth);
+            needsResize = true;
+        }
+
+        if (stage.getHeight() < optimalHeight) {
+            stage.setHeight(optimalHeight);
+            needsResize = true;
+        }
+
+        if (needsResize) {
+            stage.centerOnScreen();
+        }
+    }
+
+    private void switchScene(Stage stage, Parent root, String title){
+        stage.setTitle(title);
+        stage.getScene().setRoot(root);
+
+    }
+
+
 }

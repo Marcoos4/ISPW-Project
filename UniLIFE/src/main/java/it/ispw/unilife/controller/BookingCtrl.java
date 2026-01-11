@@ -7,10 +7,11 @@ import it.ispw.unilife.bean.ReservationBean;
 import it.ispw.unilife.bean.StudentBean;
 import it.ispw.unilife.bean.TutorBean;
 import it.ispw.unilife.boundary.StripeBoundary;
-import it.ispw.unilife.dao.DAOFactory;
 import it.ispw.unilife.dao.ReservationDAO;
+import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.*;
 import it.ispw.unilife.model.session.SessionManager;
+import it.ispw.unilife.dao.factory.DAOFactory;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -53,7 +54,7 @@ public class BookingCtrl {
      */
     public boolean bookLesson(ReservationBean reservationBean, PaymentBean paymentBean) {
         StripeBoundary stripeBoundary = new StripeBoundary();
-        Reservation reservationModel = new Reservation(convertTutorBeanToModel(reservationBean.getTutor()), DAOFactory.getDAOFactory().getStudentDAO(), LocalDateTime.of(reservationBean.getDate(), reservationBean.getStartTime()) ,
+        Reservation reservationModel = new Reservation(convertTutorBeanToModel(reservationBean.getTutor()), (Student) DAOFactory.getDAOFactory().getStudentDAO(), LocalDateTime.of(reservationBean.getDate(), reservationBean.getStartTime()) ,
                                             calculateDuration(reservationBean.getStartTime(), reservationBean.getEndTime()));
         long amountInCents = reservationModel.calculateTotalCostInCents();
 
@@ -141,7 +142,7 @@ public class BookingCtrl {
         return reservationBean;
     }
 
-    public void pendingReservation(ReservationBean reservationBean) {
+    public void pendingReservation(ReservationBean reservationBean) throws DAOException {
         Reservation reservation = convertReservationBeanToModel(reservationBean);
         reservation.updatePayment(ReservationStatus.PENDING, null);
         DAOFactory.getDAOFactory().getReservationDAO().insert(reservation);

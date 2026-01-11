@@ -12,13 +12,10 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class LoginView {
-    @FXML private Hyperlink registrationLink;
 
     @FXML private TextField emailField;
     @FXML private TextField passwordField;
 
-    // Riferimento al Controller Applicativo
-    // La View "conosce" il Controller per passargli i comandi
     private LoginController loginController;
 
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
@@ -60,7 +57,7 @@ public class LoginView {
             UserBean userBean = new UserBean();
             userBean.setUserName(userOrEmail);
             userBean.setPassword(pwd);
-            this.loginController.login(userBean);
+            this.loginController.login(event, userBean);
         } catch (Exception e) {
             showAlert("Login Fallito", "Credenziali non valide. Riprova.");
         }
@@ -71,19 +68,24 @@ public class LoginView {
         UserBean userBean = new UserBean();
         if (emailField != null) userBean.setUserName(emailField.getText());
         if (passwordField!= null) userBean.setPassword(passwordField.getText());
-        Navigator.getNavigatorInstance().goToRegistration(userBean);
+        Navigator.getNavigatorInstance().goToRegistration(event, userBean);
     }
 
     @FXML
     public void onGoogleLoginClick(ActionEvent event) throws IOException{
         System.out.println("Login Google cliccato");
-        this.loginController.externalLogin("Google");
+        this.loginController.externalLogin(event, "Google");
     }
 
     @FXML
     public void onGithubLoginClick(ActionEvent event) throws IOException {
         System.out.println("Login Github cliccato");
-        loginController.externalLogin("GitHub");
+        loginController.externalLogin(event, "GitHub");
+    }
+
+    @FXML
+    public void onBackToHome(ActionEvent event)throws IOException{
+        Navigator.getNavigatorInstance().goToHome(event);
     }
 
 
