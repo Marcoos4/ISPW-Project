@@ -2,6 +2,7 @@ package it.ispw.unilife.view; // NOTA IL PACKAGE
 
 import it.ispw.unilife.bean.UserBean;
 import it.ispw.unilife.controller.LoginController; // Questo è l'unico vero controller
+import it.ispw.unilife.exception.ExternalAuthenticationException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -57,7 +58,8 @@ public class LoginView {
             UserBean userBean = new UserBean();
             userBean.setUserName(userOrEmail);
             userBean.setPassword(pwd);
-            this.loginController.login(event, userBean);
+            this.loginController.login(userBean);
+            Navigator.getNavigatorInstance().goToHome(event);
         } catch (Exception e) {
             showAlert("Login Fallito", "Credenziali non valide. Riprova.");
         }
@@ -74,13 +76,23 @@ public class LoginView {
     @FXML
     public void onGoogleLoginClick(ActionEvent event) throws IOException{
         System.out.println("Login Google cliccato");
-        this.loginController.externalLogin(event, "Google");
+        try {
+            this.loginController.externalLogin("Google");
+            Navigator.getNavigatorInstance().goToHome(event);
+        }catch (ExternalAuthenticationException e){
+            showAlert("Login Fallito", "I server di Google non rispondono.\n Riprova o cambia modalità.");
+        }
     }
 
     @FXML
     public void onGithubLoginClick(ActionEvent event) throws IOException {
-        System.out.println("Login Github cliccato");
-        loginController.externalLogin(event, "GitHub");
+        System.out.println("Login Google cliccato");
+        try {
+            this.loginController.externalLogin("GitHub");
+            Navigator.getNavigatorInstance().goToHome(event);
+        }catch (ExternalAuthenticationException e){
+            showAlert("Login Fallito", "I server di GitHub non rispondono.\n Riprova o cambia modalità.");
+        }
     }
 
     @FXML

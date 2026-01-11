@@ -4,9 +4,11 @@ import it.ispw.unilife.bean.UserBean;
 import it.ispw.unilife.boundary.*;
 import it.ispw.unilife.dao.factory.DAOFactory;
 import it.ispw.unilife.dao.UserDAO;
+import it.ispw.unilife.exception.ExternalAuthenticationException;
 import it.ispw.unilife.exception.LoginException;
 import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
+import it.ispw.unilife.model.Role;
 import it.ispw.unilife.model.User;
 import it.ispw.unilife.model.session.SessionManager;
 import it.ispw.unilife.view.Navigator;
@@ -19,7 +21,7 @@ public class LoginController {
 
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
-    public void login(ActionEvent event, UserBean userBean) throws LoginException {
+    public void login(UserBean userBean) throws LoginException {
         try {
             String username = userBean.getUserName();
             String password = userBean.getPassword();
@@ -35,7 +37,7 @@ public class LoginController {
         }
     }
 
-    public void externalLogin(ActionEvent event, String service) throws IOException {
+    public void externalLogin(String service) throws IOException {
         ExternalLogin boundary;
 
         if ("GitHub".equalsIgnoreCase(service)) {
@@ -48,27 +50,14 @@ public class LoginController {
 
         try {
             externalUserBean = boundary.authenticate();
-            if (externalUserBean == null) {
-                return;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
             UserDAO dao = DAOFactory.getDAOFactory().getUserDAO();
             User user = dao.findUserForExternalLogin(externalUserBean.getUserName());
 
-            if (user == null) {
-                Navigator.getNavigatorInstance().goToRegistration(event, externalUserBean);
-            } else {
-                SessionManager.getInstance().createSession(user);
-                UserBean sessionBean = convertUserToBean(user);
-                Navigator.getNavigatorInstance().goToLogin(event, sessionBean);
-            }
+            SessionManager.getInstance().createSession(user);
+
+        } catch (ExternalAuthenticationException e){
 
         } catch (UserNotFoundException e) {
-            Navigator.getNavigatorInstance().goToRegistration(event, externalUserBean);
         } catch (Exception e){
             throw new RuntimeException();
         }
