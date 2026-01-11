@@ -9,6 +9,7 @@ public class CourseBean {
     private String name;
     private String university;
     private String affinity;     // Already Formatted: "85%" o "N/A"
+    private String language;
     private CourseType courseType;
     private String description;
     private String annualCost;   // Ex: "2500.0 €"
@@ -24,6 +25,9 @@ public class CourseBean {
 
     public String getAffinity() { return affinity; }
     public void setAffinity(String affinity) { this.affinity = affinity; }
+
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) {this.language = language; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }

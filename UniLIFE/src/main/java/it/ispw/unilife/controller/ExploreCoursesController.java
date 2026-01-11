@@ -6,6 +6,7 @@ import it.ispw.unilife.dao.CourseDAO;
 import it.ispw.unilife.dao.factory.DAOFactory;
 import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.Course;
+import it.ispw.unilife.model.CourseType;
 import it.ispw.unilife.model.search.FilterSearch;
 
 import java.util.ArrayList;
@@ -22,6 +23,30 @@ public class ExploreCoursesController {
     public ExploreCoursesController(){
         this.daoFactory = DAOFactory.getDAOFactory();
         this.courseDao = daoFactory.getCourseDAO();
+    }
+
+    public List<CourseBean> searchCourseByName(CourseBean bean){
+
+        List<Course> courses;
+        try {
+            courses = courseDao.getAll();
+        } catch (DAOException e) {
+            logger.log(Level.SEVERE, "ERRORE: Can't access courseDAO");
+            return null;
+        }
+
+        String name = bean.getName();
+        List<CourseBean> beanList = new ArrayList<>();
+
+        for(Course course : courses){
+            if (name == null || name.isEmpty() ||
+                    course.getName().toLowerCase().contains(name.toLowerCase())) {
+                    CourseBean courseBean = convertCourseToBean(course);
+                    beanList.add(courseBean);
+            }
+        }
+
+        return beanList;
     }
 
     public List<CourseBean> searchCoursesByFilters(FilterSearchBean bean) {
@@ -56,6 +81,8 @@ public class ExploreCoursesController {
 
         return beanList;
     }
+
+    // Get Filters Currently present in the Persistency Layer
 
     public List<FilterSearchBean> getAvailableFaculties() {
         List<FilterSearchBean> beanList = new ArrayList<>();
@@ -99,14 +126,14 @@ public class ExploreCoursesController {
         return beanList;
     }
 
-
     public List<FilterSearchBean> getAvailableCourseTypes() {
         List<FilterSearchBean> beanList = new ArrayList<>();
         try {
             List<String> types = courseDao.getDistinctCourseTypes();
 
             for (String type : types) {
-                beanList.add(new FilterSearchBean(null, null, null, type, null, -1));
+                String convType = CourseType.degreeTypeToString(CourseType.stringToCourseType(type));
+                beanList.add(new FilterSearchBean(null, null, null, convType, null, -1));
             }
         } catch (DAOException e) {
             e.printStackTrace();
@@ -114,6 +141,7 @@ public class ExploreCoursesController {
         return beanList;
     }
 
+    // ---------- PRIVATE METHODS
     private CourseBean convertCourseToBean(Course course){
 
         CourseBean bean = new CourseBean();
@@ -128,6 +156,8 @@ public class ExploreCoursesController {
             bean.setUniversity("N/A");
             bean.setNation("N/A");
         }
+
+        bean.setLanguage(course.getLanguage());
 
         bean.setFaculty(course.getFaculty());
         bean.setAnnualCost(String.format("%d €", course.getCostEstimate()));

@@ -52,7 +52,6 @@
     -fx-text-fill: black;
 }
 
-/* --- Bottone --- */
 .orange-button {
     -fx-background-color: #e0e0e0; /* Grigio di default come nell'immagine */
     -fx-text-fill: #333333;

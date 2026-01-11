@@ -6,20 +6,20 @@ public enum CourseType {
     SINGLE_CYCLE,
     PHD;
 
-    public static CourseType stringToDegreeType(String stringDegree) {
+    public static CourseType stringToCourseType(String stringDegree) {
         if (stringDegree == null) return null;
 
         switch (stringDegree) {
-            case "Bachelor" -> {
+            case "Bachelor" , "BACHELOR"-> {
                 return CourseType.BACHELOR;
             }
-            case "Master" -> {
+            case "Master" , "MASTER" -> {
                 return CourseType.MASTER;
             }
-            case "Single Cycle" -> {
+            case "Single Cycle" , "SINGLE_CYCLE" -> {
                 return CourseType.SINGLE_CYCLE;
             }
-            case "PhD" -> {
+            case "PhD", "PHD" -> {
                 return CourseType.PHD;
             }
             default -> {

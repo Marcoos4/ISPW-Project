@@ -82,7 +82,7 @@ public class Navigator {
             Parent root = loader.load();
 
             Node source = (Node) event.getSource();
-            resizeScene(source, 900, 600);
+            resizeScene(source, 1500, 1000);
             switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Explore Courses");
 
         } catch (IOException e) {

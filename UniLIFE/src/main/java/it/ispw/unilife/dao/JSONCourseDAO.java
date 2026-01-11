@@ -3,6 +3,7 @@ package it.ispw.unilife.dao;
 import it.ispw.unilife.dao.factory.DAOFactory;
 import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.Course;
+import it.ispw.unilife.model.CourseType;
 import it.ispw.unilife.model.University;
 
 

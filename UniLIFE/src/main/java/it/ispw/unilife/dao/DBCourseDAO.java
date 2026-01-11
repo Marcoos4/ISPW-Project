@@ -92,7 +92,7 @@ public class DBCourseDAO implements CourseDAO {
                 }
 
                 String typeStr = rs.getString("course_type");
-                CourseType type = CourseType.stringToDegreeType(typeStr);
+                CourseType type = CourseType.stringToCourseType(typeStr);
 
                 Course course = new Course(
                         rs.getString("name"),
