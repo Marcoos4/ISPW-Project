@@ -1,5 +1,7 @@
 package it.ispw.unilife.config;
 
+import it.ispw.unilife.bean.UserBean;
+import it.ispw.unilife.view.HomePageView;
 import it.ispw.unilife.view.Navigator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +12,12 @@ import java.io.IOException;
 
 public class UniLIFEApp extends Application {
 
-    public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/HomePage.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-        stage.show();
+    @Override
+    public void start(Stage primaryStage) {
+        // 1. Configurazioni iniziali (Titolo, Icona, ecc.)
+        primaryStage.setTitle("UniLIFE");
+
+        HomePageView homePage = new HomePageView();
+        homePage.displayHome(null, primaryStage);
     }
 }

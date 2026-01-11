@@ -21,7 +21,7 @@ public class LoginController {
 
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
-    public void login(UserBean userBean) throws LoginException {
+    public UserBean login(UserBean userBean) throws LoginException {
         try {
             String username = userBean.getUserName();
             String password = userBean.getPassword();
@@ -30,14 +30,17 @@ public class LoginController {
             User user = userDao.findUserByUsernameAndPassword(username, password);
 
             SessionManager.getInstance().createSession(user);
+
             logger.info("Sessione creata");
+
+            return convertUserToBean(user);
 
         } catch (UserNotFoundException e) {
             throw new LoginException("Credenziali non valide");
         }
     }
 
-    public void externalLogin(String service) throws IOException {
+    public UserBean externalLogin(String service) throws IOException {
         ExternalLogin boundary;
 
         if ("GitHub".equalsIgnoreCase(service)) {
@@ -46,7 +49,7 @@ public class LoginController {
             boundary = new GoogleAuthAdapter();
         }
 
-        UserBean externalUserBean;
+        UserBean externalUserBean = null;
 
         try {
             externalUserBean = boundary.authenticate();
@@ -61,6 +64,8 @@ public class LoginController {
         } catch (Exception e){
             throw new RuntimeException();
         }
+
+        return externalUserBean;
     }
 
     public void register(ActionEvent event, UserBean userBean) throws RegistrationException {

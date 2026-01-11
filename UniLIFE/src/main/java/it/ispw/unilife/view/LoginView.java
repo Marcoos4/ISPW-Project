@@ -58,8 +58,10 @@ public class LoginView {
             UserBean userBean = new UserBean();
             userBean.setUserName(userOrEmail);
             userBean.setPassword(pwd);
-            this.loginController.login(userBean);
-            Navigator.getNavigatorInstance().goToHome(event);
+            userBean = this.loginController.login(userBean);
+
+            HomePageView homePage = new HomePageView();
+            homePage.displayHome(userBean, event);
         } catch (Exception e) {
             showAlert("Login Fallito", "Credenziali non valide. Riprova.");
         }
@@ -77,8 +79,9 @@ public class LoginView {
     public void onGoogleLoginClick(ActionEvent event) throws IOException{
         System.out.println("Login Google cliccato");
         try {
-            this.loginController.externalLogin("Google");
-            Navigator.getNavigatorInstance().goToHome(event);
+            UserBean userBean = this.loginController.externalLogin("Google");
+            HomePageView homePageView = new HomePageView();
+            homePageView.displayHome(userBean, event);
         }catch (ExternalAuthenticationException e){
             showAlert("Login Fallito", "I server di Google non rispondono.\n Riprova o cambia modalità.");
         }
@@ -88,8 +91,9 @@ public class LoginView {
     public void onGithubLoginClick(ActionEvent event) throws IOException {
         System.out.println("Login Google cliccato");
         try {
-            this.loginController.externalLogin("GitHub");
-            Navigator.getNavigatorInstance().goToHome(event);
+            UserBean userBean = this.loginController.externalLogin("GitHub");
+            HomePageView homePageView = new HomePageView();
+            homePageView.displayHome(userBean, event);
         }catch (ExternalAuthenticationException e){
             showAlert("Login Fallito", "I server di GitHub non rispondono.\n Riprova o cambia modalità.");
         }

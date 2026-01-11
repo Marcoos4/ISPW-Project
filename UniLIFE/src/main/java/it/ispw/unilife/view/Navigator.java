@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,13 +30,13 @@ public class Navigator {
 
     public void goToHome(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/HomePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/BaseHome.fxml"));
             Parent root = loader.load();
             Node source = (Node) event.getSource();
-            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Registration");
+            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Home");
 
         } catch (IOException e) {
-            System.err.println("ERROR: Can't load HomePage.fxml");
+            System.err.println("ERROR: Can't load BaseHome.fxml");
         }
     }
 
@@ -132,6 +133,27 @@ public class Navigator {
         switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Student Reservation");
     }
 
+    public void show(Stage stage, Pane root) {
+        if (stage.getScene() == null) {
+            // Primo avvio: creo la scena
+            stage.setScene(new Scene(root));
+        } else {
+            // Navigazione successiva: cambio solo la root
+            stage.getScene().setRoot(root);
+        }
+        stage.show();
+    }
+
+    // --- METODO 2: PER I BOTTONI (Riceve l'Evento) ---
+    public void show(ActionEvent event, Pane root) {
+        // Estraggo lo stage dall'evento...
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+
+        // ...e riuso la logica del metodo 1!
+        this.show(stage, root);
+    }
+
 
     private void resizeScene(Node source, double optimalWidth, double optimalHeight) {
         Stage stage = (Stage) source.getScene().getWindow();
@@ -163,4 +185,13 @@ public class Navigator {
     }
 
 
+    public void goToPendingReservation(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/PendingReservationPage.fxml"));
+        Parent root = loader.load();
+
+        ReservationView controller = loader.getController();
+
+        Node source = (Node) event.getSource();
+        switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Reservation");
+    }
 }
