@@ -4,10 +4,11 @@ import it.ispw.unilife.model.Student;
 
 import java.util.List;
 
-public class JSONStudentDAO implements StudentDAO{
-    @Override
-    public Student getInstance() {
-        return null;
+public class JSONStudentDAO extends JSONDAO<Student> implements StudentDAO{
+
+
+    protected JSONStudentDAO() {
+        super("data/student.json", Student.class);
     }
 
     @Override

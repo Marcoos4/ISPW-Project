@@ -2,31 +2,22 @@ package it.ispw.unilife.dao;
 
 import it.ispw.unilife.config.Configuration;
 import it.ispw.unilife.config.PersistencyMode;
-import it.ispw.unilife.model.Student;
-import it.ispw.unilife.model.User;
 
 public abstract class DAOFactory {
 
-    private static DAOFactory instance = null;
+    public static DAOFactory getDAOFactory(){
 
-    protected DAOFactory(){}
+        Configuration config = Configuration.getInstance();
+        PersistencyMode mode = config.getPersistencyMode();
 
-    public static synchronized DAOFactory getDAOFactory(){
+        if(mode.equals(PersistencyMode.JDBC))
+            return new DBDAOFactory();
+        else
+            return new JSONDAOFactory();
 
-        if(instance == null){
-            Configuration config = Configuration.getInstance();
-            PersistencyMode mode = config.getPersistencyMode();
-            if(mode.equals(PersistencyMode.JDBC))
-                instance = new DBDAOFactory();
-            else
-                instance = new JSONDAOFactory();
-        }
-        return instance;
     }
 
     public abstract ReservationDAO getReservationDAO();
 
-    public abstract UserDAO getUserDAO();
 
-    public abstract Student getStudentDAO();
 }

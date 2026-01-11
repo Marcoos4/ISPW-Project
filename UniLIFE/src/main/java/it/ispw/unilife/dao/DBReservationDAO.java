@@ -1,5 +1,6 @@
 package it.ispw.unilife.dao;
 
+import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.Reservation;
 import it.ispw.unilife.model.Student;
 import it.ispw.unilife.model.Tutor;
@@ -11,12 +12,6 @@ import java.util.List;
 public class DBReservationDAO implements ReservationDAO{
 
     @Override
-    public Reservation getInstance() {
-
-        return null;
-    }
-
-    @Override
     public List<Reservation> getAll() {
 
         return List.of();
@@ -24,7 +19,11 @@ public class DBReservationDAO implements ReservationDAO{
 
     @Override
     public void insert(Reservation reservation) {
-        return 0;
+    }
+
+    @Override
+    public void delete(Reservation reservation) throws DAOException {
+
     }
 
 

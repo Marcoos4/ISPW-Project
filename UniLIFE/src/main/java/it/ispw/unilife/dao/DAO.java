@@ -1,13 +1,16 @@
 package it.ispw.unilife.dao;
 
+
+import it.ispw.unilife.exception.DAOException;
+
 import java.util.List;
 
 public interface DAO <T>{
 
-    T getInstance();
+    public List<T> getAll() throws DAOException;
 
-    List<T> getAll();
+    public void insert(T t) throws DAOException;
 
-    void insert(T t);
+    public void delete(T t) throws DAOException;
 
 }

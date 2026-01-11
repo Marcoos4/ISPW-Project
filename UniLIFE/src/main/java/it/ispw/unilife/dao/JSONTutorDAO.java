@@ -4,10 +4,10 @@ import it.ispw.unilife.model.Tutor;
 
 import java.util.List;
 
-public class JSONTutorDAO implements TutorDAO{
-    @Override
-    public Tutor getInstance() {
-        return null;
+public class JSONTutorDAO extends  JSONDAO<Tutor> implements TutorDAO{
+
+    protected JSONTutorDAO() {
+        super("data/tutor.json", Tutor.class);
     }
 
     @Override

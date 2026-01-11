@@ -1,5 +1,6 @@
 package it.ispw.unilife.dao;
 
+import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.model.Tutor;
 
 import java.sql.Connection;
@@ -13,11 +14,6 @@ public class DBTutorDAO implements TutorDAO{
 
     private static List<Tutor> tutors = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(DBUserDAO.class.getName());
-
-    @Override
-    public Tutor getInstance() {
-        return null;
-    }
 
     @Override
     public List getAll() {
@@ -45,6 +41,11 @@ public class DBTutorDAO implements TutorDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void delete(Tutor tutor) throws DAOException {
+
     }
 
 }

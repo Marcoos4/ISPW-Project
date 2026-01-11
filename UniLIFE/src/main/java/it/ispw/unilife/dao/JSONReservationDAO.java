@@ -15,48 +15,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONReservationDAO implements ReservationDAO{
-    private final File file;
-    private final Gson gson;
+public class JSONReservationDAO extends JSONDAO<Reservation> implements ReservationDAO{
+
     private List<Reservation> reservations;
 
 
     public JSONReservationDAO() {
-        this.file = new File("data/reservation.json");
-        this.gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (src, type, ctx) ->
-                        new JsonPrimitive(src.toString())
-                )
-                .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, ctx) ->
-                        LocalDateTime.parse(json.getAsString())
-                )
-                .setPrettyPrinting()
-                .create();
-        this.reservations = new ArrayList<>();
-
-        try {
-            if (!file.exists()) {
-                if (file.getParentFile() != null) {
-                    file.getParentFile().mkdirs();
-                }
-
-                file.createNewFile();
-
-                // Inizializza con parentesi quadre per il JSON Array
-                try (FileWriter writer = new FileWriter(file)) {
-                    writer.write("[]");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Errore critico: Impossibile creare il file di storage.");
-        }
+        super("data/reservation.json", Reservation.class);
     }
 
-    @Override
-    public Reservation getInstance() {
-
-        return null;
-    }
 
     @Override
     public List<Reservation> getAll() {
