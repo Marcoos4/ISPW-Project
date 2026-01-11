@@ -132,7 +132,7 @@ public class ExploreCoursesController {
             List<String> types = courseDao.getDistinctCourseTypes();
 
             for (String type : types) {
-                String convType = CourseType.degreeTypeToString(CourseType.stringToCourseType(type));
+                String convType = CourseType.courseTypeToString(CourseType.stringToCourseType(type));
                 beanList.add(new FilterSearchBean(null, null, null, convType, null, -1));
             }
         } catch (DAOException e) {

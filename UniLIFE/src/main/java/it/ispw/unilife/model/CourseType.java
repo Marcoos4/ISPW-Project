@@ -28,7 +28,7 @@ public enum CourseType {
         }
     }
 
-    public static String degreeTypeToString(CourseType degreeType) {
+    public static String courseTypeToString(CourseType degreeType) {
         if (degreeType == null) return "";
 
         switch (degreeType) {

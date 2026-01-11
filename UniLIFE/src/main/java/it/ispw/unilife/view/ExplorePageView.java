@@ -50,7 +50,7 @@ public class ExplorePageView {
     }
 
     @FXML
-    public void onSearchClick() {
+    public void onSearchClick(ActionEvent event) {
         CourseBean courseBean = new CourseBean();
         courseBean.setName(searchBar.getText());
         List<CourseBean> results = appController.searchCourseByName(courseBean);
@@ -59,7 +59,7 @@ public class ExplorePageView {
     }
 
     @FXML
-    public void onApplyFiltersClick() {
+    public void onApplyFiltersClick(ActionEvent event) {
         FilterSearchBean filterBean = convertFiltersToBean();
         List<CourseBean> results = appController.searchCoursesByFilters(filterBean);
         updateResultsView(results);
@@ -130,22 +130,22 @@ public class ExplorePageView {
         }
     }
 
-    private HBox createCourseCard(CourseBean course) {
+    private HBox createCourseCard(CourseBean courseBean) {
         HBox card = new HBox(15);
         card.setPadding(new Insets(15));
         card.setStyle("-fx-background-color: white; -fx-background-radius: 10; " +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);");
 
         VBox infoBox = new VBox(5);
-        Label title = new Label(course.getName());
+        Label title = new Label(courseBean.getName());
         title.setFont(new Font("System Bold", 18));
         title.setTextFill(Color.web("#006680"));
 
-        Label uni = new Label(course.getUniversity() + " - " + course.getFaculty());
+        Label uni = new Label(courseBean.getUniversity() + " - " + courseBean.getFaculty());
         uni.setTextFill(Color.GRAY);
 
-        Label details = new Label(CourseType.degreeTypeToString(course.getCourseType()) + " | " + course.getLanguage()
-                + " | Costo ~€" + course.getAnnualCost());
+        Label details = new Label(CourseType.courseTypeToString(courseBean.getCourseType()) + " | " + courseBean.getLanguage()
+                + " | Costo ~€" + courseBean.getAnnualCost());
         details.setFont(new Font(12));
 
         infoBox.getChildren().addAll(title, uni, details);
@@ -153,8 +153,8 @@ public class ExplorePageView {
         card.getChildren().add(infoBox);
 
         card.setOnMouseClicked(event -> {
-            System.out.println("Find Details : " + course.getName());
-            // Navigator.getNavigatorInstance().goToCourseDetails(course);
+            System.out.println("Find Details : " + courseBean.getName());
+            Navigator.getNavigatorInstance().goToCourseDetails(event, courseBean);
         });
 
         return card;

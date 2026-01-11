@@ -91,8 +91,22 @@ public class Navigator {
         }
     }
 
-    public void goToCourseDetails(CourseBean courseBean){
-        return;
+    public void goToCourseDetails(Event event, CourseBean courseBean) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/CourseDetails.fxml"));
+            Parent root = loader.load();
+
+            CourseDetailsView controller = loader.getController();
+            controller.initData(courseBean);
+
+            Node source = (Node) event.getSource();
+            resizeScene(source, 1500, 1000);
+            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - " + courseBean.getName());
+
+        } catch (IOException e) {
+            System.err.println("ERROR: Can't load CourseDetails.fxml");
+            e.printStackTrace();
+        }
     }
 
 
