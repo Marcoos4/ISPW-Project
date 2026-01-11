@@ -1,6 +1,9 @@
 package it.ispw.unilife.boundary;
 
 import it.ispw.unilife.bean.UserBean;
+import it.ispw.unilife.exception.ExternalAuthenticationException;
+
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +12,7 @@ public class GithubAuthAdapter implements ExternalLogin {
     private final GithubAuthBoundary githubBoundary = new GithubAuthBoundary();
 
     @Override
-    public UserBean authenticate() throws Exception {
+    public UserBean authenticate() throws ExternalAuthenticationException, IOException, InterruptedException {
         String rawJsonProfile = githubBoundary.executeLoginAndFetchProfile();
 
         if (rawJsonProfile == null) return null;

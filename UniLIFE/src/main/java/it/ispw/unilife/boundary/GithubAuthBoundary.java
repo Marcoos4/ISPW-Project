@@ -1,11 +1,13 @@
 package it.ispw.unilife.boundary;
 
+import it.ispw.unilife.exception.ExternalAuthenticationException;
 import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.URI;
@@ -26,7 +28,7 @@ public class GithubAuthBoundary {
 
     private String capturedCode = null;
 
-    public String executeLoginAndFetchProfile() throws Exception {
+    public String executeLoginAndFetchProfile() throws ExternalAuthenticationException, IOException, InterruptedException {
         String code = getAuthorizationCode();
         if (code == null) return null;
 
@@ -64,7 +66,7 @@ public class GithubAuthBoundary {
         return this.capturedCode;
     }
 
-    private String exchangeCodeForToken(String code) throws Exception {
+    private String exchangeCodeForToken(String code) throws ExternalAuthenticationException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         String params = "client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code;
 
@@ -79,7 +81,7 @@ public class GithubAuthBoundary {
         return extractJsonValue(response.body(), "access_token");
     }
 
-    private String fetchUserProfile(String token) throws Exception {
+    private String fetchUserProfile(String token) throws ExternalAuthenticationException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.github.com/user"))

@@ -11,6 +11,7 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
+import it.ispw.unilife.exception.ExternalAuthenticationException;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class GoogleAuthBoundary {
         }
     }
 
-    public Userinfo executeLoginAndFetchProfile() throws Exception {
+    public Userinfo executeLoginAndFetchProfile() throws ExternalAuthenticationException, IOException, InterruptedException {
         Credential credential = authorize();
         Oauth2 oauth2 = new Oauth2.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName("UniLIFE")
@@ -42,7 +43,7 @@ public class GoogleAuthBoundary {
         return oauth2.userinfo().get().execute();
     }
 
-    private Credential authorize() throws Exception {
+    private Credential authorize() throws ExternalAuthenticationException, IOException, InterruptedException {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
                 new InputStreamReader(GoogleAuthBoundary.class.getResourceAsStream("/client_secrets.json")));
 
