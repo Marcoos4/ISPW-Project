@@ -21,5 +21,9 @@ public class DBDAOFactory extends DAOFactory {
     }
     @Override
     public StudentDAO getStudentDAO(){return new DBStudentDAO();}
+    @Override
+    public TutorDAO getTutorDAO() {return new DBTutorDAO();}
+    @Override
+    public SubjectDAO getSubjectDAO() {return new DBSubjectDAO();}
 
 }

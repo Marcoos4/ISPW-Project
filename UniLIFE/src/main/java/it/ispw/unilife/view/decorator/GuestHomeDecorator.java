@@ -13,26 +13,21 @@ public class GuestHomeDecorator extends ViewDecorator {
 
     @Override
     public Pane draw() {
-        // 1. Recupera la vista base (scheletro)
         Pane p = super.draw();
-
-        // 2. Trova il contenitore dei bottoni
         VBox menuBox = (VBox) p.lookup("#menuBox");
 
-        // 3. Crea il pulsante Login (specifico per Guest)
+        // --- AZIONE PRINCIPALE: LOGIN ---
         Button btnLogin = new Button("Login / Register");
-        btnLogin.getStyleClass().add("home-button");
-        btnLogin.setOnAction(e ->
-            Navigator.getNavigatorInstance().goToLogin(e, null));
+        btnLogin.getStyleClass().add("button-primary"); // Arancione
+        // Passiamo null come userBean perché è un nuovo login
+        btnLogin.setOnAction(e -> Navigator.getNavigatorInstance().goToLogin(e, null));
 
-        // 4. Crea il pulsante Explore (comune a Guest e Student)
+        // --- AZIONE SECONDARIA: EXPLORE ---
         Button btnExplore = new Button("Explore Courses");
-        btnExplore.getStyleClass().add("home-button");
+        btnExplore.getStyleClass().add("button-secondary"); // Bianco
         btnExplore.setOnAction(e -> Navigator.getNavigatorInstance().goToExplorePage(e));
 
-        // 5. Aggiungi i bottoni al layout
         menuBox.getChildren().addAll(btnLogin, btnExplore);
-
         return p;
     }
 }

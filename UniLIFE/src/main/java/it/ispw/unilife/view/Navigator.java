@@ -4,6 +4,7 @@ import it.ispw.unilife.bean.CourseBean;
 import it.ispw.unilife.bean.UserBean;
 import it.ispw.unilife.bean.ReservationBean;
 import it.ispw.unilife.bean.TutorBean;
+import it.ispw.unilife.controller.SessionController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -32,8 +33,9 @@ public class Navigator {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/ispw/unilife/BaseHome.fxml"));
             Parent root = loader.load();
-            Node source = (Node) event.getSource();
-            switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Home");
+            HomePageView homePageView = loader.getController();
+            SessionController sessionController = new SessionController();
+            homePageView.displayHome(sessionController.checkPermission(), event);
 
         } catch (IOException e) {
             System.err.println("ERROR: Can't load BaseHome.fxml");
@@ -135,22 +137,19 @@ public class Navigator {
 
     public void show(Stage stage, Pane root) {
         if (stage.getScene() == null) {
-            // Primo avvio: creo la scena
             stage.setScene(new Scene(root));
+            resizeScene(root, 600, 600);
         } else {
-            // Navigazione successiva: cambio solo la root
             stage.getScene().setRoot(root);
         }
         stage.show();
     }
 
-    // --- METODO 2: PER I BOTTONI (Riceve l'Evento) ---
     public void show(ActionEvent event, Pane root) {
-        // Estraggo lo stage dall'evento...
         Node source = (Node) event.getSource();
+        resizeScene(source, 600, 600);
         Stage stage = (Stage) source.getScene().getWindow();
 
-        // ...e riuso la logica del metodo 1!
         this.show(stage, root);
     }
 
@@ -189,7 +188,7 @@ public class Navigator {
         FXMLLoader loader = new FXMLLoader(ReservationView.class.getResource("/it/ispw/unilife/PendingReservationPage.fxml"));
         Parent root = loader.load();
 
-        ReservationView controller = loader.getController();
+        PendingReservationsView controller = loader.getController();
 
         Node source = (Node) event.getSource();
         switchScene((Stage) source.getScene().getWindow(), root, "UniLife - Reservation");

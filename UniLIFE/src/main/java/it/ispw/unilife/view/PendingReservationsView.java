@@ -1,7 +1,7 @@
 package it.ispw.unilife.view;
 
 import it.ispw.unilife.bean.ReservationBean;
-import it.ispw.unilife.controller.BookingCtrl;
+import it.ispw.unilife.controller.BookingController;
 import it.ispw.unilife.model.ReservationStatus;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -22,7 +22,7 @@ public class PendingReservationsView {
     @FXML
     private Label lblMessage;
 
-    private BookingCtrl bookingCtrl = new BookingCtrl();
+    private BookingController bookingController = new BookingController();
 
     @FXML
     public void initialize() {
@@ -34,7 +34,7 @@ public class PendingReservationsView {
         requestsContainer.getChildren().clear();
 
         // 2. Prendo i dati
-        List<ReservationBean> pending = bookingCtrl.getPendingReservation();
+        List<ReservationBean> pending = bookingController.getPendingReservation();
 
         if (pending.isEmpty()) {
             lblMessage.setText("Nessuna richiesta in attesa.");
@@ -78,13 +78,13 @@ public class PendingReservationsView {
             // -- AZIONI --
 
             btnAccept.setOnAction(event -> {
-                bookingCtrl.manageReservation(bean, ReservationStatus.ACCEPTED);
+                bookingController.manageReservation(bean, ReservationStatus.ACCEPTED);
                 requestsContainer.getChildren().remove(row);
                 updateCounter();
             });
 
             btnReject.setOnAction(event -> {
-                bookingCtrl.manageReservation(bean, ReservationStatus.REJECTED);
+                bookingController.manageReservation(bean, ReservationStatus.REJECTED);
                 requestsContainer.getChildren().remove(row);
                 updateCounter();
             });

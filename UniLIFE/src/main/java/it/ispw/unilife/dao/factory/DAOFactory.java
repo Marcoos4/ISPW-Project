@@ -28,5 +28,7 @@ public abstract class DAOFactory {
     public abstract UniversityDAO getUniversityDAO();
     public abstract ReservationDAO getReservationDAO();
     public abstract StudentDAO getStudentDAO();
+    public abstract TutorDAO getTutorDAO();
+    public abstract SubjectDAO getSubjectDAO();
 
 }

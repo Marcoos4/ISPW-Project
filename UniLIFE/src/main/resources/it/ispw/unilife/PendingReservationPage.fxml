@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ispw.unilife.controller.grafico.PendingReservationsController">
+<BorderPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ispw.unilife.view.PendingReservationsView">
 
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="1000.0" spacing="15.0" style="-fx-background-color: #1f1f1f; -fx-padding: 10 20 10 20;">

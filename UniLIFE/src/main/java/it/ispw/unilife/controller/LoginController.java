@@ -9,6 +9,7 @@ import it.ispw.unilife.exception.LoginException;
 import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
 import it.ispw.unilife.model.Role;
+import it.ispw.unilife.model.Student;
 import it.ispw.unilife.model.User;
 import it.ispw.unilife.model.session.SessionManager;
 import it.ispw.unilife.view.Navigator;
@@ -21,26 +22,24 @@ public class LoginController {
 
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
-    public UserBean login(UserBean userBean) throws LoginException {
+    public void login(UserBean userBean) throws LoginException {
         try {
             String username = userBean.getUserName();
             String password = userBean.getPassword();
 
             UserDAO userDao = DAOFactory.getDAOFactory().getUserDAO();
             User user = userDao.findUserByUsernameAndPassword(username, password);
-
+            user = createRightUser(user);
             SessionManager.getInstance().createSession(user);
 
             logger.info("Sessione creata");
-
-            return convertUserToBean(user);
 
         } catch (UserNotFoundException e) {
             throw new LoginException("Credenziali non valide");
         }
     }
 
-    public UserBean externalLogin(String service) throws IOException {
+    public void externalLogin(String service) throws IOException {
         ExternalLogin boundary;
 
         if ("GitHub".equalsIgnoreCase(service)) {
@@ -55,6 +54,7 @@ public class LoginController {
             externalUserBean = boundary.authenticate();
             UserDAO dao = DAOFactory.getDAOFactory().getUserDAO();
             User user = dao.findUserForExternalLogin(externalUserBean.getUserName());
+            user = createRightUser(user);
 
             SessionManager.getInstance().createSession(user);
 
@@ -65,7 +65,23 @@ public class LoginController {
             throw new RuntimeException();
         }
 
-        return externalUserBean;
+    }
+
+    private User createRightUser(User user) {
+        try{
+            switch (user.getRole()) {
+                case TUTOR -> {
+                    return DAOFactory.getDAOFactory().getTutorDAO().findTutorByUsername(user.getUserName());
+                }
+                case STUDENT -> {
+                    return DAOFactory.getDAOFactory().getStudentDAO().findStudentByUsername(user.getUserName());
+                }
+                //TODO implementa per University employee
+                default -> throw new RuntimeException();
+            }
+        }catch(UserNotFoundException e){
+            return new User(null, null, null, null, Role.GUEST);
+        }
     }
 
     public void register(ActionEvent event, UserBean userBean) throws RegistrationException {

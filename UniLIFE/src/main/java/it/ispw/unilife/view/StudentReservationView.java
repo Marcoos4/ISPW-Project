@@ -1,7 +1,7 @@
 package it.ispw.unilife.view;
 
 import it.ispw.unilife.bean.ReservationBean;
-import it.ispw.unilife.controller.BookingCtrl;
+import it.ispw.unilife.controller.BookingController;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ public class StudentReservationView {
     @FXML private VBox paymentContainer;
     @FXML private Label lblMessage;
 
-    private BookingCtrl bookingCtrl = new BookingCtrl();
+    private BookingController bookingController = new BookingController();
 
     @FXML
     public void initialize() {
@@ -31,7 +31,7 @@ public class StudentReservationView {
         paymentContainer.getChildren().clear();
 
         // Chiamo il metodo LATO STUDENTE
-        List<ReservationBean> toPay = bookingCtrl.getAcceptedReservationsForStudent();
+        List<ReservationBean> toPay = bookingController.getAcceptedReservationsForStudent();
 
         if (toPay.isEmpty()) {
             lblMessage.setText("Non hai lezioni in attesa di pagamento.");

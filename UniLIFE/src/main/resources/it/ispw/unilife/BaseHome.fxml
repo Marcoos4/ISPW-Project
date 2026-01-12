@@ -4,12 +4,14 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      alignment="CENTER" spacing="20"
-      style="-fx-background-color: white; -fx-padding: 20;">
+      alignment="CENTER" spacing="30"
+      fx:controller="it.ispw.unilife.view.HomePageView"
+      stylesheets="@style.css"
+      styleClass="root">
 
-    <Label text="UniLIFE Dashboard" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label text="UniLIFE Dashboard" styleClass="header-title" />
 
-    <VBox fx:id="menuBox" alignment="CENTER" spacing="10">
+    <VBox fx:id="menuBox" alignment="CENTER" spacing="15">
     </VBox>
 
 </VBox>

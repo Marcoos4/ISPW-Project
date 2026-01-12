@@ -21,11 +21,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BookingCtrl {
+public class BookingController {
 
     public static ReservationBean selectTutor(TutorBean tutorBean) {
         ReservationBean reservationBean = new  ReservationBean();
         reservationBean.setTutor(tutorBean);
+        Student student = (Student) SessionManager.getInstance().getSession().getUser();
+        reservationBean.setStudent(convertStudentToBean(student));
+        System.out.println(tutorBean.getUsername());
+        System.out.println(reservationBean.getStudent().getUsername());
         return reservationBean;
     }
 
@@ -96,16 +100,16 @@ public class BookingCtrl {
     public List<TutorBean> getAvailableTutors(String query) {
         List<TutorBean> dummyList = new ArrayList<>();
 
-        dummyList.add(new TutorBean("Mario", "Rossi",
+        dummyList.add(new TutorBean("alfredo12","Alfredo", "Alfredini",
                 Arrays.asList("Matematica", "Analisi 1", "Geometria"), 15.0, 3));
 
-        dummyList.add(new TutorBean("Luigi", "Verdi",
+        dummyList.add(new TutorBean("aaaaaaaaaaaa","Luigi", "Verdi",
                 Arrays.asList("Fisica", "Meccanica Razionale"), 20.0, 5));
 
-        dummyList.add(new TutorBean("Anna", "Bianchi",
+        dummyList.add(new TutorBean("bbbbbbbbbbbb","Anna", "Bianchi",
                 Arrays.asList("Informatica", "Java", "Basi di Dati"), 18.0, 4));
 
-        dummyList.add(new TutorBean("Giulia", "Neri",
+        dummyList.add(new TutorBean("cccccccccccc","Giulia", "Neri",
                 Arrays.asList("Chimica", "Biologia"), 12.0, 2));
 
         return dummyList;
@@ -156,6 +160,14 @@ public class BookingCtrl {
     private Reservation convertReservationBeanToModel(ReservationBean reservationBean){
         User user = retrieveActiveUser();
         return new Reservation(convertTutorBeanToModel(reservationBean.getTutor()), new Student(user.getName(), user.getSurname(), user.getUserName(), user.getPassword()), LocalDateTime.of(reservationBean.getDate(), reservationBean.getStartTime()), getHoursDifference(reservationBean.getStartTime(), reservationBean.getEndTime()));
+    }
+
+    private static StudentBean convertStudentToBean(Student student){
+        StudentBean studentBean = new StudentBean();
+        studentBean.setName(student.getName());
+        studentBean.setSurname(student.getSurname());
+        studentBean.setUsername(student.getUserName());
+        return studentBean;
     }
 
     private long getHoursDifference(LocalTime start, LocalTime end) {

@@ -1,10 +1,13 @@
 package it.ispw.unilife.dao;
 
 import it.ispw.unilife.dao.factory.ConnectionFactory;
+import it.ispw.unilife.dao.factory.DAOFactory;
 import it.ispw.unilife.exception.DAOException;
 import it.ispw.unilife.exception.RegistrationException;
 import it.ispw.unilife.exception.UserNotFoundException;
 import it.ispw.unilife.model.Role;
+import it.ispw.unilife.model.Student;
+import it.ispw.unilife.model.Tutor;
 import it.ispw.unilife.model.User;
 
 import java.io.FileReader;
@@ -67,13 +70,21 @@ public class DBUserDAO implements UserDAO{
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getSurname());
             stmt.setString(4, user.getPassword());
-            stmt.setString(5, user.getRole().toString());
+            stmt.setString(5, Role.roleToString(user.getRole()));
 
             stmt.executeUpdate(); // Esegue il salvataggio nel DB
             logger.info("Utente salvato correttamente nel database!");
 
+            switch (user.getRole()){
+                case STUDENT -> DAOFactory.getDAOFactory().getStudentDAO().insert(new Student(user.getName(), user.getSurname(), user.getUserName(), user.getPassword()));
+                case TUTOR -> DAOFactory.getDAOFactory().getTutorDAO().insert(new Tutor(user.getName(), user.getSurname(), null, 0, 0, user.getUserName(), user.getPassword()));
+                //TODO case UNIVERSITY_EMPLOYEE
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
         }
     }
 

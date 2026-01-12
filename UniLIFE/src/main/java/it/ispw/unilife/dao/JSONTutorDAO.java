@@ -1,12 +1,13 @@
 package it.ispw.unilife.dao;
 
 import it.ispw.unilife.model.Tutor;
+import it.ispw.unilife.model.User;
 
 import java.util.List;
 
 public class JSONTutorDAO extends  JSONDAO<Tutor> implements TutorDAO{
 
-    protected JSONTutorDAO() {
+    public JSONTutorDAO() {
         super("data/tutor.json", Tutor.class);
     }
 
@@ -21,5 +22,10 @@ public class JSONTutorDAO extends  JSONDAO<Tutor> implements TutorDAO{
 
     public void saveTo() {
 
+    }
+
+    @Override
+    public User findTutorByUsername(String userName) {
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TutorBean {
+    private  String username;
     private String name;
     private  String surname;
     private List<String> subjects;
@@ -14,7 +15,8 @@ public class TutorBean {
     public TutorBean(){}
 
     //TODO Da rimuovere!!!!
-    public TutorBean(String mario, String rossi, List<String> list, double v, int i) {
+    public TutorBean(String username, String mario, String rossi, List<String> list, double v, int i) {
+        this.username = username;
         this.name = mario;
         this.surname = rossi;
         this.subjects = list;
@@ -38,4 +40,7 @@ public class TutorBean {
 
     public int getRating() {return rating;}
     public void setRating(int rating){this.rating = rating;}
+
+    public String getUsername() {return username;}
+    public void setUsername(String username) {this.username = username;}
 }

@@ -2,7 +2,7 @@ package it.ispw.unilife.view;
 
 import it.ispw.unilife.bean.ReservationBean;
 import it.ispw.unilife.bean.TutorBean;
-import it.ispw.unilife.controller.BookingCtrl;
+import it.ispw.unilife.controller.BookingController;
 import it.ispw.unilife.exception.DAOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,7 +24,7 @@ public class ReservationView {
 
     private ReservationBean reservationBean;
     private TutorBean currentTutor;
-    private BookingCtrl bookingCtrl;
+    private BookingController bookingController;
     private LocalDate selectedDate;
     private LocalTime selectedTime;
 
@@ -36,7 +36,7 @@ public class ReservationView {
 
     @FXML
     public void initialize() {
-        this.bookingCtrl = new BookingCtrl();
+        this.bookingController = new BookingController();
     }
 
     /**
@@ -47,7 +47,7 @@ public class ReservationView {
      */
     public void initReservationPage(TutorBean tutor) {
         this.currentTutor = tutor;
-        this.reservationBean = BookingCtrl.selectTutor(tutor);
+        this.reservationBean = BookingController.selectTutor(tutor);
 
         this.selectedDate = LocalDate.now().plusDays(1);
         this.selectedTime = LocalTime.of(15, 0);
@@ -77,7 +77,7 @@ public class ReservationView {
         if (otherTutorsContainer == null) return;
         otherTutorsContainer.getChildren().clear();
 
-        List<TutorBean> allTutors = bookingCtrl.getAvailableTutors("");
+        List<TutorBean> allTutors = bookingController.getAvailableTutors("");
         if (allTutors != null) {
             for (TutorBean t : allTutors) {
                 if (currentTutor != null && t.getName().equals(currentTutor.getName())) {
@@ -110,7 +110,7 @@ public class ReservationView {
         this.reservationBean.setDate(this.selectedDate);
         this.reservationBean.setStartTime(this.selectedTime);
         this.reservationBean.setEndTime(this.selectedTime.plusHours(1));
-        this.bookingCtrl.pendingReservation(reservationBean);
+        this.bookingController.pendingReservation(reservationBean);
         showMessage(
                 "Richiesta Inviata",
                 "Operazione completata con successo",

@@ -4,16 +4,11 @@ import it.ispw.unilife.bean.PaymentBean;
 import it.ispw.unilife.bean.ReservationBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 // Ricordati di importare il tuo Bean e il Controller Applicativo
-import it.ispw.unilife.bean.TutorBean;
-import it.ispw.unilife.controller.BookingCtrl;
-import javafx.stage.Stage;
+import it.ispw.unilife.controller.BookingController;
 
 import java.io.IOException;
 
@@ -45,7 +40,7 @@ public class PaymentView {
      * Riferimento al Controller Applicativo.
      * La View NON parla con DAO o Stripe direttamente, ma solo tramite lui.
      */
-    private BookingCtrl bookingCtrl;
+    private BookingController bookingController;
 
     /**
      * Il Tutor che l'utente ha selezionato nella schermata precedente.
@@ -62,7 +57,7 @@ public class PaymentView {
     public void initData(ReservationBean reservation) {
         this.reservationBean = reservation;
 
-        this.bookingCtrl = new BookingCtrl();
+        this.bookingController = new BookingController();
     }
 
     /**
@@ -80,7 +75,7 @@ public class PaymentView {
         paymentBean.setCardNumber(txtCardNumber.getText());
         paymentBean.setExpiryDate(txtExpiry.getText());
         paymentBean.setCvv(txtCvv.getText());
-        boolean success = bookingCtrl.bookLesson(
+        boolean success = bookingController.bookLesson(
                 this.reservationBean,paymentBean);
 
         Navigator.getNavigatorInstance().goToStudentReservation(event);

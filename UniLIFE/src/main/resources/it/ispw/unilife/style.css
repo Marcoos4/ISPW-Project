@@ -1,46 +1,14 @@
-
-.accordion {
-    -fx-background-color: transparent;
+/* ==========================================
+   1. IMPOSTAZIONI GENERALI (Vecchie e Nuove)
+   ========================================== */
+.root {
+    -fx-font-family: "System";
+    -fx-background-color: #f4f4f4;
 }
 
-.flat-pane > .title {
-    -fx-background-color: white; /* Forza il bianco */
-    -fx-background-radius: 0;
-    -fx-border-color: #dddddd;
-    -fx-border-width: 0 0 1 0; /* Solo riga sotto */
-    -fx-padding: 15px;         /* Più spazio */
-}
-
-.flat-pane > .title > .text {
-    -fx-fill: #333333;
-    -fx-font-weight: bold;
-    -fx-font-size: 20px;
-}
-
-.flat-pane > .title > .arrow-button {
-    -fx-background-color: transparent;
-}
-.flat-pane > .title > .arrow-button .arrow {
-    -fx-background-color: #666666; /* Colore grigio scuro */
-    -fx-padding: 0 0 0 5; /* Sposta leggermente */
-}
-
-.flat-pane > .content {
-    -fx-background-color: #ffffff;
-    -fx-border-color: transparent;
-}
-
-.flat-pane:hover > .title {
-    -fx-background-color: #f9f9f9;
-}
-
-.flat-pane {
-    -fx-skin: "javafx.scene.control.skin.TitledPaneSkin";
-}
-
-
+/* Manteniamo anche .root-pane se lo usavi in vecchi FXML */
 .root-pane {
-    -fx-background-color: #f4f4f4; /* Sfondo grigio chiaro generale */
+    -fx-background-color: #f4f4f4;
 }
 
 .label {
@@ -52,9 +20,102 @@
     -fx-text-fill: black;
 }
 
-/* --- Bottone --- */
-.orange-button {
-    -fx-background-color: #e0e0e0; /* Grigio di default come nell'immagine */
+/* Stile per il titolo della Dashboard (Nuovo) */
+.header-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* ==========================================
+   2. STILI PER ACCORDION / TITLEDPANE
+   ========================================== */
+.accordion {
+    -fx-background-color: transparent;
+}
+
+/* Nota: Ricorda di mettere styleClass="flat-pane" nei TitledPane */
+.flat-pane {
+    -fx-text-fill: #333333;
+    -fx-skin: "javafx.scene.control.skin.TitledPaneSkin"; /* Mantenuto dal tuo vecchio codice */
+}
+
+.flat-pane > .title {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 15px;
+}
+
+.flat-pane > .title > .text {
+    -fx-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.flat-pane > .title > .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.flat-pane > .title > .arrow-button .arrow {
+    -fx-background-color: #666666;
+    -fx-padding: 0 0 0 5;
+}
+
+.flat-pane > .content {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+.flat-pane:hover > .title {
+    -fx-background-color: #f9f9f9;
+}
+
+/* ==========================================
+   3. BOTTONI (Compatibilità + Nuovi)
+   ========================================== */
+
+/* --- A. NUOVI STILI (Per Dashboard/Decorator) --- */
+
+/* Arancione (Principale) */
+.button-primary {
+    -fx-background-color: #FF9900;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+.button-primary:hover {
+    -fx-background-color: #e68a00;
+}
+
+/* Bianco/Grigio (Secondario) */
+.button-secondary {
+    -fx-background-color: white;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+}
+.button-secondary:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* --- B. VECCHI STILI (Corretti) --- */
+
+/* CORREZIONE: Prima avevi due ".orange-button".
+   Ho rinominato quello grigio in ".grey-button" così non vanno in conflitto.
+*/
+
+/* Quello che prima chiamavi orange-button ma era grigio */
+.grey-button {
+    -fx-background-color: #e0e0e0;
     -fx-text-fill: #333333;
     -fx-background-radius: 4;
     -fx-cursor: hand;
@@ -62,14 +123,13 @@
     -fx-border-radius: 4;
 }
 
+/* Quello vero Arancione (Mantenuto per compatibilità con vecchi FXML) */
 .orange-button {
     -fx-background-color: #ff9900;
     -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
 }
 .orange-button:hover {
     -fx-background-color: #e68a00;
-}
-
-.accordion {
-    -fx-background-color: transparent;
 }
